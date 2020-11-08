@@ -2,12 +2,16 @@ package com.example.diplomska;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Switch;
+
+import java.util.Calendar;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -33,6 +37,18 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Tuka vnesi kod za promena na promenlivata za notifikacii
+                Calendar calendar = Calendar.getInstance();
+
+                calendar.set(Calendar.HOUR_OF_DAY, 16);
+                calendar.set(Calendar.MINUTE, 15);
+
+                Intent notificationIntent = new Intent(SettingsActivity.this, BroadcastReceiver.class);
+
+                PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(),100,notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+                AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+                alarmManager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+
             }
         });
 

@@ -27,7 +27,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="  Daily remainders"
+        android:text="  Daily reminders"
         android:textColor="@android:color/white"
         android:textSize="25dp"
         android:id="@+id/notifications_settings_text"
@@ -38,7 +38,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="  Motivational mesages"
+        android:text="  Motivational messages"
         android:textColor="@android:color/white"
         android:textSize="25dp"
         android:id="@+id/motivations_settings_text"
@@ -70,6 +70,9 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
+        android:paddingVertical="25dp"
+        android:paddingHorizontal="25dp"
+        android:backgroundTint="#000066"
         android:text="BACK"
         android:textSize="20dp"
         />
