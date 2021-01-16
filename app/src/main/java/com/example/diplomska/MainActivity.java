@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vocabulary);
+        setContentView(R.layout.activity_main);
 
         Button vocabularyButton = (Button) findViewById(R.id.basicVocabularyButton);
         Button translateButton = (Button) findViewById(R.id.translateButton);
@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
         translateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent translateIntent = new Intent(MainActivity.this, SettingsActivity.class);
+                Intent translateIntent = new Intent(MainActivity.this, TranslateActivity.class);
                 startActivity(translateIntent);
             }
         });
@@ -71,7 +71,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(testThreeIntent);
             }
         });
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
