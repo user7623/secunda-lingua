@@ -21,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.w3c.dom.Text;
+
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -33,22 +35,33 @@ public class TranslateActivity extends AppCompatActivity {
     private int counter = 0;
     boolean correctAnswerFlag = true;
     boolean hideResultTextView = false;
+    private int questionNumber = 0;
+    private int numberOfQuestions = 0;
+    private String[] questionsArray;
+    private String[] answersArray;
+    private String[] alternativeAnswersArray;
 
     Button questionMarkButton;
     Button submitButton;
     Button quitButton;
     EditText answerText;
+    TextView questionText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_translate);
-        showWrongToast();
+
         questionMarkButton = (Button) findViewById(R.id.questionMarkButtonTranslate);
         submitButton = (Button) findViewById(R.id.translateSubmitButton);
         quitButton = (Button) findViewById(R.id.quitButtonOnTranslate);
         answerText = (EditText) findViewById(R.id.translateEditText);
+        questionText = (TextView) findViewById(R.id.translateTextView);
 
+        //popolni gi nizite za prasanja i prevod
+        readFromDb();
+
+        giveQuestionFunc();
 
         questionMarkButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +93,22 @@ public class TranslateActivity extends AppCompatActivity {
 
         //TODO: kod za proverka na odgovorot
 
+        String answerGiven = answerText.getText().toString().toLowerCase();
+        String answerRequired = answersArray[questionNumber];
+        String alAnswerRequired = alternativeAnswersArray[questionNumber];
+        Log.d("info: " , answerGiven + answerRequired + alAnswerRequired);
+        if (answerText.getText().toString().toLowerCase().equals(answersArray[questionNumber].toLowerCase()))
+        {
+            correctAnswerFlag = true;
+        }
+        else if (answerText.getText().toString().toLowerCase().equals(alternativeAnswersArray[questionNumber].toLowerCase()))
+        {
+            correctAnswerFlag = true;
+        }else{
+            correctAnswerFlag = false;
+        }
+
+        //soodvetno izvestuvanje
         if (correctAnswerFlag)
         {
             Log.d("info: " , "Correct answer");
@@ -87,6 +116,15 @@ public class TranslateActivity extends AppCompatActivity {
         }else{
             Log.d("info: " , "Incorrect answer");
             showWrongToast();
+        }
+        //edit text poleto isprazni go
+        answerText.setText("");
+
+        if (questionNumber == (numberOfQuestions - 1))
+        {
+            endCourseFunc();
+        } else {
+            nextQuestionFunc();
         }
     }
 
@@ -145,6 +183,44 @@ public class TranslateActivity extends AppCompatActivity {
             timer.cancel();
             timer = null;
         }
+    }
+
+    public  void giveQuestionFunc()
+    {
+        Log.d("info:" , "setting question, question number is" + questionNumber);
+        questionText.setText(questionsArray[questionNumber]);
+        //questionNumber++;
+    }
+
+    public void readFromDb()
+    {
+        //TODO: napravi da cita od db !!!
+        numberOfQuestions = 2;
+        questionsArray = new String[numberOfQuestions];
+        answersArray = new String[numberOfQuestions];
+        alternativeAnswersArray = new String[numberOfQuestions];
+
+        questionsArray[0] = "Hello world";
+        questionsArray[1] = "My name is";
+        answersArray[0] = "Zdravo svetu";
+        answersArray[1] = "Moeto ime e";
+        alternativeAnswersArray[0] = "zdravo svetu";
+        alternativeAnswersArray[1] = "Jas se vikam";
+
+    }
+
+    private void nextQuestionFunc()
+    {
+        questionNumber++;
+        questionText.setText(questionsArray[questionNumber]);
+
+    }
+
+    private void endCourseFunc()
+    {
+        Log.d("info", "ending translate activity --------------------------------------");
+        Intent endTranslateActivity = new Intent(TranslateActivity.this, MainActivity.class);
+        startActivity(endTranslateActivity);
     }
 
 }

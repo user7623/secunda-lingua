@@ -2,8 +2,10 @@ package com.example.diplomska;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Layout;
 import android.text.SpannableString;
@@ -72,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        databaseInitializationFunc();
+
     }
 
 
@@ -102,6 +106,21 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void databaseInitializationFunc()
+    {
+
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences("UserDataBase", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+
+
+        //so editor ima problemi i zatoa na zastaren nacin :\
+        //PreferenceManager.getDefaultSharedPreferences(MainActivity.this).edit().putInt("batteryPercentage", bp).apply();
+
+
+
     }
 
 
