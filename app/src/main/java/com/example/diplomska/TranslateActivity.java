@@ -3,6 +3,8 @@ package com.example.diplomska;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.SpannableString;
@@ -18,16 +20,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class TranslateActivity extends AppCompatActivity {
 
+    private SQLiteDatabase mDatabase;
     String hintString = "";
     private static Timer timer;
     private static TimerTask timerTask;
@@ -37,28 +42,49 @@ public class TranslateActivity extends AppCompatActivity {
     boolean hideResultTextView = false;
     private int questionNumber = 0;
     private int numberOfQuestions = 0;
-    private String[] questionsArray;
-    private String[] answersArray;
-    private String[] alternativeAnswersArray;
-
+    int seekBarProgress = 0;
+    ArrayList<String> questionsList = new ArrayList<>();
+    ArrayList<String> translationsList = new ArrayList<>();
+    ArrayList<String> altTranslationsList = new ArrayList<>();
     Button questionMarkButton;
     Button submitButton;
     Button quitButton;
     EditText answerText;
     TextView questionText;
+    SeekBar seekBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_translate);
 
+        TranslateDBHelper dbHelper = new TranslateDBHelper(this);
+        mDatabase = dbHelper.getWritableDatabase();
+
         questionMarkButton = (Button) findViewById(R.id.questionMarkButtonTranslate);
         submitButton = (Button) findViewById(R.id.translateSubmitButton);
         quitButton = (Button) findViewById(R.id.quitButtonOnTranslate);
         answerText = (EditText) findViewById(R.id.translateEditText);
         questionText = (TextView) findViewById(R.id.translateTextView);
+        seekBar = (SeekBar) findViewById(R.id.seekBarTranslate);
 
-        //popolni gi nizite za prasanja i prevod
+        //seekBar.setEnabled(false);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                seekBar.setProgress(seekBarProgress);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
         readFromDb();
 
         giveQuestionFunc();
@@ -66,6 +92,9 @@ public class TranslateActivity extends AppCompatActivity {
         questionMarkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hintString = translationsList.get(questionNumber).toString();
+                hintString = hintString + " Or ";
+                hintString = hintString + altTranslationsList.get(questionNumber).toString();
                 Toast.makeText(TranslateActivity.this, hintString, Toast.LENGTH_LONG).show();
             }
         });
@@ -74,8 +103,6 @@ public class TranslateActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Log.d("info: " , "entered onClick");
                 checkAnswerFunction();
-
-               //TODO: kod za proverka na vnesewniot odgovor
             }
         });
         quitButton.setOnClickListener(new View.OnClickListener() {
@@ -94,17 +121,24 @@ public class TranslateActivity extends AppCompatActivity {
         //TODO: kod za proverka na odgovorot
 
         String answerGiven = answerText.getText().toString().toLowerCase();
-        String answerRequired = answersArray[questionNumber];
-        String alAnswerRequired = alternativeAnswersArray[questionNumber];
+        String answerRequired = translationsList.get(questionNumber); //answersArray[questionNumber];
+        String alAnswerRequired = altTranslationsList.get(questionNumber);
         Log.d("info: " , answerGiven + answerRequired + alAnswerRequired);
-        if (answerText.getText().toString().toLowerCase().equals(answersArray[questionNumber].toLowerCase()))
+        if (answerText.getText().toString().toLowerCase().equals(translationsList.get(questionNumber).toLowerCase()))
         {
+            seekBarProgress = seekBarProgress + 10;
+            seekBar.setProgress(seekBarProgress);
             correctAnswerFlag = true;
         }
-        else if (answerText.getText().toString().toLowerCase().equals(alternativeAnswersArray[questionNumber].toLowerCase()))
+        else if (answerText.getText().toString().toLowerCase().equals(altTranslationsList.get(questionNumber).toLowerCase()))
         {
+            seekBarProgress = seekBarProgress + 10;
+            seekBar.setProgress(seekBarProgress);
             correctAnswerFlag = true;
         }else{
+
+            seekBarProgress = seekBarProgress - 10;
+            seekBar.setProgress(seekBarProgress);
             correctAnswerFlag = false;
         }
 
@@ -188,31 +222,48 @@ public class TranslateActivity extends AppCompatActivity {
     public  void giveQuestionFunc()
     {
         Log.d("info:" , "setting question, question number is" + questionNumber);
-        questionText.setText(questionsArray[questionNumber]);
+        questionText.setText(questionsList.get(questionNumber));
         //questionNumber++;
     }
 
     public void readFromDb()
     {
         //TODO: napravi da cita od db !!!
-        numberOfQuestions = 2;
-        questionsArray = new String[numberOfQuestions];
-        answersArray = new String[numberOfQuestions];
-        alternativeAnswersArray = new String[numberOfQuestions];
+        Cursor mCursor = mDatabase.query(translateExercise.TranslateEntry.TABLE_NAME,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null);
+        mCursor.moveToFirst();
 
-        questionsArray[0] = "Hello world";
-        questionsArray[1] = "My name is";
-        answersArray[0] = "Zdravo svetu";
-        answersArray[1] = "Moeto ime e";
-        alternativeAnswersArray[0] = "zdravo svetu";
-        alternativeAnswersArray[1] = "Jas se vikam";
+        int count = mCursor.getCount();
+        Log.d("info " , "found " + String.valueOf(count) + "number of rows in database **********");
+        while (!mCursor.isAfterLast())
+        {
+            String sent;
+            String translation;
+            String altTranslation;
+            sent = mCursor.getString(mCursor.getColumnIndex(translateExercise.TranslateEntry.COLUMN_SENTENCE));
+            translation = mCursor.getString(mCursor.getColumnIndex(translateExercise.TranslateEntry.COLUMN_TRANSLATION));
+            altTranslation = mCursor.getString(mCursor.getColumnIndex(translateExercise.TranslateEntry.COLUMN_ALT_TRANSLATION));
+            Log.e("READING FROM DATABASE:" , sent + translation);
+
+            questionsList.add(sent);
+            translationsList.add(translation);
+            altTranslationsList.add(altTranslation);
+            mCursor.moveToNext();
+        }
+
+        mCursor.close();
 
     }
 
     private void nextQuestionFunc()
     {
         questionNumber++;
-        questionText.setText(questionsArray[questionNumber]);
+        questionText.setText(questionsList.get(questionNumber));
 
     }
 

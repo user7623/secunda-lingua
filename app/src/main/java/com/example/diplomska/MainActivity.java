@@ -24,12 +24,16 @@ import android.widget.Toast;
 
 import java.io.File;
 
+import static com.example.diplomska.translations.getAlternativeTranslationsarrayGlobal;
+import static com.example.diplomska.translations.getSentencesArrayGlobal;
+import static com.example.diplomska.translations.getTranslationsArrayGlobal;
+
 public class MainActivity extends AppCompatActivity {
 
     private SQLiteDatabase mDatabase;
-    public static String sentence = "Hello there";
-    public static String translation = "Zdravo tamu";
-    public static String altTranslation = "Zdravo";
+    static String[] sentences;
+    static String[] translations;
+    static String[] altTranslations;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
         testOneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //TODO: popravi go kodot za da bide soodveten za kopceto
                 Cursor mCursor = mDatabase.query(translateExercise.TranslateEntry.TABLE_NAME,
                         null,
                         null,
@@ -83,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                 sent = sent + mCursor.getString(mCursor.getColumnIndex(translateExercise.TranslateEntry.COLUMN_SENTENCE));
                 translation = translation + mCursor.getString(mCursor.getColumnIndex(translateExercise.TranslateEntry.COLUMN_TRANSLATION));
                 Log.e("READING FROM DATABASE:" , sent + translation);
-
+                mCursor.close();
                 //Intent testOneIntent = new Intent(MainActivity.this, SettingsActivity.class);
                 //startActivity(testOneIntent);
             }
@@ -147,13 +152,22 @@ public class MainActivity extends AppCompatActivity {
 
         //TODO: smeni go inicijalniot kod da ne koristi static final za debagiranje sto se
         Log.d("info :" , "Entered in add item function **********");
+        sentences = getSentencesArrayGlobal();
+        translations = getTranslationsArrayGlobal();
+        altTranslations = getAlternativeTranslationsarrayGlobal();
         ContentValues cv = new ContentValues();
+        int count = sentences.length;
+        Log.e("Number" , "count is" + String.valueOf(count));
+        for (int i = 0 ; i < count ; i++)
+        {
+            cv.put(translateExercise.TranslateEntry.COLUMN_SENTENCE, sentences[i]);
+            cv.put(translateExercise.TranslateEntry.COLUMN_TRANSLATION, translations[i]);
+            cv.put(translateExercise.TranslateEntry.COLUMN_ALT_TRANSLATION, altTranslations[i]);
+            Log.d("info: " , "now putting number" + String.valueOf(i));
+            mDatabase.insert(translateExercise.TranslateEntry.TABLE_NAME, null, cv);
+        }
 
-        cv.put(translateExercise.TranslateEntry.COLUMN_SENTENCE, sentence);
-        cv.put(translateExercise.TranslateEntry.COLUMN_TRANSLATION, translation);
-        cv.put(translateExercise.TranslateEntry.COLUMN_ALT_TRANSLATION, altTranslation);
 
-        mDatabase.insert(translateExercise.TranslateEntry.TABLE_NAME, null, cv);
         Log.e("database: " , "initialized");
     }
 
