@@ -10,6 +10,12 @@ public class translations {
     public static String[] alternativeTranslationsarrayGlobal = new String[]{"Zdravo", "Prijatno", "prijatna vecer" , "Moeto ime e John Smith" ,
     "jas sum 20 godini star" , "Ziveam vo London" , "Gladen sum" , "Zeden sum" , "Kade e zeleznickata" , "Prijatno vreme"};
 
+    public static String[] imagesIdsGlobal = new String[]{"book" , "car" , "cat", "dog" , "food" , "house" , "pc" ,
+            "pencil" , "phone" , "phone"};
+
+
+    public static String[] getImagesIdsGlobal(){return imagesIdsGlobal;}
+
     public static String[] getSentencesArrayGlobal() {
         return sentencesArrayGlobal;
     }

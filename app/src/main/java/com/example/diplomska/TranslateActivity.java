@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
@@ -158,7 +159,17 @@ public class TranslateActivity extends AppCompatActivity {
         {
             endCourseFunc();
         } else {
-            nextQuestionFunc();
+            //startTimer();
+            new CountDownTimer(3500, 1000) {
+                public void onFinish() {
+                    nextQuestionFunc();
+                }
+
+                public void onTick(long millisUntilFinished) {
+
+                }
+            }.start();
+            //nextQuestionFunc();
         }
     }
 
@@ -206,7 +217,8 @@ public class TranslateActivity extends AppCompatActivity {
 
                 if(counter == 1)
                 {
-
+                    nextQuestionFunc();
+                    stopTimerTask();
                 }
             }
         };
