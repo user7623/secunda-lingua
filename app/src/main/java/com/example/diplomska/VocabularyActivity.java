@@ -1,6 +1,10 @@
 package com.example.diplomska;
 
 import android.content.Intent;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.SoundPool;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Log;
@@ -23,6 +27,9 @@ import java.util.ArrayList;
 import static com.example.diplomska.translations.getImagesIdsGlobal;
 
 public class VocabularyActivity extends AppCompatActivity {
+
+    private SoundPool soundPool;
+    private int sound1;
     private int questionNumber = 0;
     String[] imagesList;
     int currentQuestionNumber = 1;
@@ -90,12 +97,28 @@ public class VocabularyActivity extends AppCompatActivity {
                 startActivity(quitVocabularyIntent);
             }
         });
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            AudioAttributes audioAttributes = new AudioAttributes.Builder()
+                    .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
+                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                    .build();
+            soundPool = new SoundPool.Builder()
+                    .setMaxStreams(1)
+                    .setAudioAttributes(audioAttributes)
+                    .build();
+        } else {
+            soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
+        }
+
+        sound1 = soundPool.load(this, R.raw.sound1, 1);
+
         giveQuestionFunc();
     }
 
     public void giveQuestionFunc() {
         Log.d("info:", "setting question, question number is" + questionNumber);
-        Log.e("images names ", imagesList[questionNumber] + imagesList[questionNumber + 1] + imagesList[questionNumber + 2]);
+//        Log.e("images names ", imagesList[questionNumber] + imagesList[questionNumber + 1] + imagesList[questionNumber + 2]);
 
         String imageName = imagesList[questionNumber];
         String imageLocation = "drawable/" + imageName;
@@ -106,6 +129,7 @@ public class VocabularyActivity extends AppCompatActivity {
     private void nextQuestionFunc() {
         questionNumber++;
         giveQuestionFunc();
+        answer.setText("");
         //questionText.setText(questionsList.get(questionNumber));
 
     }
@@ -120,14 +144,14 @@ public class VocabularyActivity extends AppCompatActivity {
 
         Log.d("info: ", answerGiven + answerRequired);
         if (answerGiven.toLowerCase().equals(answerRequired.toLowerCase())) {
-            seekBarProgress = seekBarProgress + 10;
+            seekBarProgress = seekBarProgress + 20;
             seekBar.setProgress(seekBarProgress);
             correctAnswerFlag = true;
             showCorrectToast();
         } else {
-            if (seekBarProgress >= 10)
+            if (seekBarProgress >= 20)
             {
-                seekBarProgress = seekBarProgress - 10;
+                seekBarProgress = seekBarProgress - 20;
             }else{
                 seekBarProgress = 0;
             }
@@ -147,6 +171,7 @@ public class VocabularyActivity extends AppCompatActivity {
     }
     private void showCorrectToast()
     {
+        soundPool.play(sound1, 1, 1, 0, 0, 1);
         LayoutInflater inflater = getLayoutInflater();
         View layout = inflater.inflate(R.layout.correct_answer_toast_layout, (ViewGroup) findViewById(R.id.correct_toast_root));
         ImageView toastImage = layout.findViewById(R.id.correct_toast_image);
@@ -156,6 +181,7 @@ public class VocabularyActivity extends AppCompatActivity {
         toast.setDuration(Toast.LENGTH_LONG);
         toast.setView(layout);
         toast.show();
+
     }
     private void showWrongToast()
     {

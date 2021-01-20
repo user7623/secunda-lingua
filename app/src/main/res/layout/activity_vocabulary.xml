@@ -9,7 +9,7 @@
 
     <Button
         android:id="@+id/quitButtonOnVocabulary"
-        android:layout_width="70dp"
+        android:layout_width="70sp"
         android:layout_height="wrap_content"
         android:backgroundTint="@android:color/holo_red_dark"
         android:text="QUIT"
@@ -43,7 +43,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/seekBarVocabulary"
-        android:textColor="@android:color/black"
+        android:textColor="#19FA19"
         android:textSize="20dp"
         />
     <ImageView
@@ -65,18 +65,19 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/vocabularyPicture"
         android:backgroundTint="@android:color/white"
-        android:textColor="@android:color/black"
+        android:textColor="#19FA19"
 
         />
 
     <EditText
         android:id="@+id/vocabularyEditTextAnswer"
-        android:layout_width="300dp"
+        android:layout_width="300sp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/questionMarkButtonVocabulary"
+        android:textColor="#19FA19"
         />
     <Button
         android:id="@+id/vocabularySubmitButton"
@@ -85,12 +86,13 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/vocabularyEditTextAnswer"
+        android:backgroundTint="#19FA19"
         android:text="Submit"
         />
     <TextView
         android:id="@+id/correctIncorrectTextViewVocabulary"
         android:layout_width="match_parent"
-        android:layout_height="175dp"
+        android:layout_height="175sp"
         android:text="Correct!"
         android:textSize="50dp"
         android:gravity="center"

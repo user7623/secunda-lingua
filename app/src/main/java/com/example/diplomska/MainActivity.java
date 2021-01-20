@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
         understandButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent understandIntent = new Intent(MainActivity.this, SettingsActivity.class);
+                Intent understandIntent = new Intent(MainActivity.this, UnderstandActivity.class);
                 startActivity(understandIntent);
             }
         });
@@ -141,11 +141,6 @@ public class MainActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    private void databaseInitializationFunc()
-    {
-
     }
 
     private void addItem() {
