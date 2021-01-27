@@ -1,10 +1,14 @@
 package com.example.diplomska;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
+
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -36,6 +40,40 @@ public class SettingsActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (notificationsSwitch.isActivated()) {
+                    Log.d("info" , "Notifications are activated");
+                    SharedPreferences preferences = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+
+                    PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putInt("timeOfDay", hourTextViewValue).apply();
+
+                    activateNotificationsFunction();
+                }else if (!notificationsSwitch.isActivated())
+                {
+                    Log.d("info" , "Notifications are deactivated");
+                    SharedPreferences preferences = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+
+                    PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putInt("timeOfDay", 0).apply();
+
+                    activateNotificationsFunction();
+                }
+                if (motivationSwitch.isActivated())
+                {
+                    Log.d("info" , "Motivational messages are activated");
+                    SharedPreferences preferences = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+
+                    PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putBoolean("motivation", true).apply();
+                }else if (!motivationSwitch.isActivated())
+                {
+                    Log.d("info" , "Motivational messages are deactivated");
+                    SharedPreferences preferences = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+
+                    PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putBoolean("motivation", false).apply();
+                }
                 Intent backToMainMenu = new Intent(SettingsActivity.this, MainActivity.class);
                 startActivity(backToMainMenu);
             }
@@ -62,6 +100,13 @@ public class SettingsActivity extends AppCompatActivity {
                 {
                     Toast.makeText(SettingsActivity.this, "Notifications are turned off", Toast.LENGTH_SHORT).show();
                     notificationsAreActivated = false;
+
+                    SharedPreferences preferences = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+
+                    PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putInt("timeOfDay", hourTextViewValue).apply();
+
+                    activateNotificationsFunction();
                     // kod za deaktiviranje na notifications
                 }else {
                     // Tuka vnesi kod za promena na promenlivata za notifikacii
@@ -96,4 +141,11 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
     }
+
+    private void activateNotificationsFunction()
+    {
+        Intent alarmServiceIntent = new Intent(SettingsActivity.this , AlarmService.class);
+        startService(alarmServiceIntent);
+    }
+
 }

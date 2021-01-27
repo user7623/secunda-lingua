@@ -85,7 +85,7 @@ public class UnderstandActivity extends AppCompatActivity {
 
                     ConvertTextToSpeech();
 
-                    new CountDownTimer(4500, 1000) {
+                    new CountDownTimer(2500, 1000) {
                         public void onFinish() {
                             Log.e("next question:", ".............................................");
                             int id = getResources().getIdentifier("drawable/play_sound_icon", "id", "com.example.diplomska");
