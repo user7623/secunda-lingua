@@ -20,9 +20,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static com.example.diplomska.translations.getAlternativeTranslationsarrayGlobal;
 import static com.example.diplomska.translations.getSentencesArrayGlobal;
@@ -34,6 +37,13 @@ public class MainActivity extends AppCompatActivity {
     static String[] sentences;
     static String[] translations;
     static String[] altTranslations;
+    private static Timer timer;
+    private static TimerTask timerTask;
+    long oldTime = 0;
+    private int counter = 0;
+
+
+    TextView scoreTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +59,18 @@ public class MainActivity extends AppCompatActivity {
         Button testOneButton = (Button) findViewById(R.id.testOneButton);
         Button testTwoButton = (Button) findViewById(R.id.testTwoButton);
         Button testThreeButton = (Button) findViewById(R.id.testThreeButton);
+        scoreTextView = (TextView) findViewById(R.id.scoreTextView);
+
+        SharedPreferences preferences = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+        SharedPreferences.Editor editor = preferences.edit();
+
+        int Score = PreferenceManager.getDefaultSharedPreferences(this).getInt("Score", 0);
+        String scoreString = scoreTextView.getText().toString();
+        scoreString = scoreString + Integer.toString(Score);
+        scoreTextView.setText(scoreString);
+
+
+
 
         vocabularyButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,5 +192,45 @@ public class MainActivity extends AppCompatActivity {
         File dbFile = context.getDatabasePath(dbName);
         return dbFile.exists();
     }
-    
+
+    public void startTimer() {
+        Log.i("info: ", "Starting timer");
+        stopTimerTask();
+        timer = new Timer();
+
+        initializeTimerTask();
+
+        Log.i("info: ", "Scheduling timer...");
+        timer.schedule(timerTask, 1000, 1000);
+    }
+
+    public void initializeTimerTask() {
+        Log.i("info: ", "initialising TimerTask");
+        timerTask = new TimerTask() {
+            public void run() {
+                Log.i("in timer", "in timer ++++  " + (counter++));
+                // na sekoi 3 sec azuriraj go rezultatot-scoretextView
+                if(counter % 3 == 0)
+                {
+                    SharedPreferences preferences = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+                    SharedPreferences.Editor editor = preferences.edit();
+
+                    int Score = PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getInt("Score", 0);
+                    String scoreString = scoreTextView.getText().toString();
+                    scoreString = scoreString + Integer.toString(Score);
+                    scoreTextView.setText(scoreString);
+                }
+            }
+        };
+    }
+
+    public void stopTimerTask() {
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
+    }
+
+
+
 }

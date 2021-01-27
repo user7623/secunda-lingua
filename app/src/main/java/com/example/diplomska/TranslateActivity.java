@@ -1,8 +1,10 @@
 package com.example.diplomska;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -93,9 +95,7 @@ public class TranslateActivity extends AppCompatActivity {
             }
         });
         readFromDb();
-
         giveQuestionFunc();
-
         questionMarkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,7 +119,6 @@ public class TranslateActivity extends AppCompatActivity {
                 startActivity(quitVocabularyIntent);
             }
         });
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             AudioAttributes audioAttributes = new AudioAttributes.Builder()
                     .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
@@ -132,11 +131,8 @@ public class TranslateActivity extends AppCompatActivity {
         } else {
             soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
         }
-
         sound1 = soundPool.load(this, R.raw.sound1, 1);
-
     }
-
     public void checkAnswerFunction()
     {
         Log.d("info: " , "entered checkAnswerFunction");
@@ -159,17 +155,27 @@ public class TranslateActivity extends AppCompatActivity {
             seekBar.setProgress(seekBarProgress);
             correctAnswerFlag = true;
         }else{
-
             seekBarProgress = seekBarProgress - 20;
             seekBar.setProgress(seekBarProgress);
             correctAnswerFlag = false;
         }
-
         //soodvetno izvestuvanje
         if (correctAnswerFlag)
         {
-            Log.d("info: " , "Correct answer");
-            showCorrectToast();
+
+            boolean motivate = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("motivation", false);
+            if (seekBarProgress >= 100)
+            {
+                endCourseFunc();
+            }
+            if (questionNumber == 3 /*&& motivate*/)
+            {
+                Log.d("info: " , "Correct answer");
+                showMotivationalMessage();
+            }else {
+                Log.d("info: ", "Correct answer");
+                showCorrectToast();
+            }
         }else{
             Log.d("info: " , "Incorrect answer");
             showWrongToast();
@@ -182,7 +188,7 @@ public class TranslateActivity extends AppCompatActivity {
             endCourseFunc();
         } else {
             //startTimer();
-            new CountDownTimer(3500, 1000) {
+            new CountDownTimer(2500, 1000) {
                 public void onFinish() {
                     nextQuestionFunc();
                 }
@@ -196,6 +202,19 @@ public class TranslateActivity extends AppCompatActivity {
 
 
 
+    }
+
+    private void showMotivationalMessage()
+    {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.motivation_toast, (ViewGroup) findViewById(R.id.motivation_toast_root));
+        ImageView toastImage = layout.findViewById(R.id.correct_toast_image);
+        toastImage.setImageResource(R.drawable.ic_motivation);
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.show();
     }
 
     private void showCorrectToast()
@@ -307,6 +326,17 @@ public class TranslateActivity extends AppCompatActivity {
 
     private void endCourseFunc()
     {
+        if (seekBarProgress >= 100) {
+            Log.d("info", "saving points --------------------------------------------------");
+            SharedPreferences preferences = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+
+            int Score = PreferenceManager.getDefaultSharedPreferences(this).getInt("Score", 0);
+
+            Score = Score + seekBarProgress;
+            PreferenceManager.getDefaultSharedPreferences(TranslateActivity.this).edit().putInt("Score", Score).apply();
+        }
+
         Log.d("info", "ending translate activity --------------------------------------");
         Intent endTranslateActivity = new Intent(TranslateActivity.this, MainActivity.class);
         startActivity(endTranslateActivity);

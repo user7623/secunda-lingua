@@ -96,6 +96,7 @@
         android:background="@android:color/holo_blue_dark"
         >
         <TextView
+            android:id="@+id/scoreTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Score: "

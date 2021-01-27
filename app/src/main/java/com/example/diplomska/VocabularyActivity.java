@@ -1,6 +1,7 @@
 package com.example.diplomska;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import java.util.ArrayList;
 
@@ -93,8 +95,7 @@ public class VocabularyActivity extends AppCompatActivity {
         quitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent quitVocabularyIntent = new Intent(VocabularyActivity.this, MainActivity.class);
-                startActivity(quitVocabularyIntent);
+                endCourseFunc();
             }
         });
 
@@ -137,6 +138,8 @@ public class VocabularyActivity extends AppCompatActivity {
     public void checkAnswerFunction() {
         Log.d("info: ", "entered checkAnswerFunction");
 
+
+
         //TODO: kod za proverka na odgovorot
 
         String answerGiven = answer.getText().toString();
@@ -147,6 +150,10 @@ public class VocabularyActivity extends AppCompatActivity {
             seekBarProgress = seekBarProgress + 20;
             seekBar.setProgress(seekBarProgress);
             correctAnswerFlag = true;
+            if (seekBarProgress >= 100)
+            {
+                endCourseFunc();
+            }
             showCorrectToast();
         } else {
             if (seekBarProgress >= 20)
@@ -197,6 +204,17 @@ public class VocabularyActivity extends AppCompatActivity {
     }
     private void endCourseFunc()
     {
+
+        if (seekBarProgress >= 100) {
+            Log.d("info", "saving points --------------------------------------------------");
+            SharedPreferences preferences = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+
+            int Score = PreferenceManager.getDefaultSharedPreferences(this).getInt("Score", 0);
+
+            Score = Score + seekBarProgress;
+            PreferenceManager.getDefaultSharedPreferences(VocabularyActivity.this).edit().putInt("Score", Score).apply();
+        }
         Log.d("info", "ending translate activity --------------------------------------");
         Intent endTranslateActivity = new Intent(VocabularyActivity.this, MainActivity.class);
         startActivity(endTranslateActivity);

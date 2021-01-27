@@ -1,6 +1,7 @@
 package com.example.diplomska;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.media.AudioAttributes;
@@ -22,6 +23,7 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import java.util.ArrayList;
 import java.util.Locale;
@@ -199,6 +201,19 @@ public class UnderstandActivity extends AppCompatActivity {
                 }
             }
             seekBar.setProgress(seekBarProgress);
+            boolean motivate = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("motivation", false);
+            if (seekBarProgress >= 100)
+            {
+                endCourseFunc();
+            }
+            if (questionNumber == 3 /*&& motivate*/)
+            {
+                Log.d("info: " , "Correct answer");
+                showMotivationalMessage();
+            }else {
+                Log.d("info: ", "Correct answer");
+                showCorrectToast();
+            }
             nextQuestionFunc();
         }
         private void showCorrectToast ()
@@ -230,6 +245,16 @@ public class UnderstandActivity extends AppCompatActivity {
 
         private void endCourseFunc ()
         {
+            if (seekBarProgress >= 100) {
+                Log.d("info", "saving points --------------------------------------------------");
+                SharedPreferences preferences = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+                SharedPreferences.Editor editor = preferences.edit();
+
+                int Score = PreferenceManager.getDefaultSharedPreferences(this).getInt("Score", 0);
+
+                Score = Score + seekBarProgress;
+                PreferenceManager.getDefaultSharedPreferences(UnderstandActivity.this).edit().putInt("Score", Score).apply();
+            }
             Log.d("info", "ending translate activity --------------------------------------");
             Intent endTranslateActivity = new Intent(UnderstandActivity.this, MainActivity.class);
             startActivity(endTranslateActivity);
@@ -290,6 +315,18 @@ public class UnderstandActivity extends AppCompatActivity {
             } else
                 tts.speak(text , TextToSpeech.QUEUE_FLUSH, null);
         }
+    private void showMotivationalMessage()
+    {
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.motivation_toast, (ViewGroup) findViewById(R.id.motivation_toast_root));
+        ImageView toastImage = layout.findViewById(R.id.correct_toast_image);
+        toastImage.setImageResource(R.drawable.ic_motivation);
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.CENTER, 0, 0);
+        toast.setDuration(Toast.LENGTH_LONG);
+        toast.setView(layout);
+        toast.show();
+    }
     }
 
 
