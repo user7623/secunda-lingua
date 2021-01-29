@@ -96,42 +96,31 @@ public class MainActivity extends AppCompatActivity {
         testOneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: popravi go kodot za da bide soodveten za kopceto
-                Cursor mCursor = mDatabase.query(translateExercise.TranslateEntry.TABLE_NAME,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null);
-                mCursor.moveToFirst();
-                String sent = "Sentence: ";
-                String translation = "Translation: ";
-                sent = sent + mCursor.getString(mCursor.getColumnIndex(translateExercise.TranslateEntry.COLUMN_SENTENCE));
-                translation = translation + mCursor.getString(mCursor.getColumnIndex(translateExercise.TranslateEntry.COLUMN_TRANSLATION));
-                Log.e("READING FROM DATABASE:" , sent + translation);
-                mCursor.close();
-                //Intent testOneIntent = new Intent(MainActivity.this, SettingsActivity.class);
-                //startActivity(testOneIntent);
+                Intent testOneIntent = new Intent(MainActivity.this, TestOneActivity.class);
+                startActivity(testOneIntent);
             }
         });
         testTwoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent testTwoIntent = new Intent(MainActivity.this, SettingsActivity.class);
+                Intent testTwoIntent = new Intent(MainActivity.this, TestActivity.class);
+                //da smeni od mk na uk da se preveduva
+                testTwoIntent.putExtra("reverse", "NO");
                 startActivity(testTwoIntent);
             }
         });
         testThreeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent testThreeIntent = new Intent(MainActivity.this, SettingsActivity.class);
+                Intent testThreeIntent = new Intent(MainActivity.this, TestActivity.class);
+                //da smeni od mk na uk da se preveduva
+                testThreeIntent.putExtra("reverse", "YES");
                 startActivity(testThreeIntent);
             }
         });
         Log.e("important!" , " !!!!!!!!!!!");
         //databaseInitializationFunc();
-        //addItem();
+        addItem();
 
     }
 
