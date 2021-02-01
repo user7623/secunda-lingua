@@ -62,11 +62,22 @@
         android:text=" ? "
         android:textSize="30dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/listenAgainButtonVocabulary"
         app:layout_constraintTop_toBottomOf="@+id/vocabularyPicture"
         android:backgroundTint="@android:color/white"
         android:textColor="#19FA19"
 
+        />
+    <ImageView
+        android:id="@+id/listenAgainButtonVocabulary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_listen_again"
+        android:textSize="30dp"
+        app:layout_constraintLeft_toRightOf="@id/questionMarkButtonVocabulary"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/vocabularyPicture"
+        android:textColor="#19FA19"
         />
 
     <EditText

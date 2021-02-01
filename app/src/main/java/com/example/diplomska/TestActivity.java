@@ -3,6 +3,7 @@ package com.example.diplomska;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,6 +12,8 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class TestActivity extends AppCompatActivity {
@@ -81,58 +84,58 @@ public class TestActivity extends AppCompatActivity {
     {
         int points = 0;
 
-        if ((aOne.getText().toString().toLowerCase().equals(correctAnswers[chosenQuestions[1]].toLowerCase()))
-                || (aOne.getText().toString().toLowerCase().equals(altCorrectAnswers[chosenQuestions[1]].toLowerCase())))
+        if ((aOne.getText().toString().toLowerCase().equals(correctAnswers[chosenQuestions[0]].toLowerCase()))
+                || (aOne.getText().toString().toLowerCase().equals(altCorrectAnswers[chosenQuestions[0]].toLowerCase())))
         {
             points = points + 1;
             aOne.setTextColor(Color.parseColor("#19FA19"));
         }else {
             String pom = aOne.getText().toString();
-            pom = pom + " (" +correctAnswers[chosenQuestions[1]] + ")";
+            pom = pom + " (" +correctAnswers[chosenQuestions[0]] + ")";
             aOne.setText(pom);
             aOne.setTextColor(Color.parseColor("#ff0000"));
         }
-        if ((aTwo.getText().toString().toLowerCase().equals(correctAnswers[chosenQuestions[2]].toLowerCase()))
+        if ((aTwo.getText().toString().toLowerCase().equals(correctAnswers[chosenQuestions[1]].toLowerCase()))
                 || (aOne.getText().toString().toLowerCase().equals(altCorrectAnswers[chosenQuestions[1]].toLowerCase())))
         {
             points = points + 1;
             aTwo.setTextColor(Color.parseColor("#19FA19"));
         }else {
             String pom = aTwo.getText().toString();
-            pom = pom + " (" +correctAnswers[chosenQuestions[2]] + ")";
+            pom = pom + " (" +correctAnswers[chosenQuestions[1]] + ")";
             aTwo.setText(pom);
             aTwo.setTextColor(Color.parseColor("#ff0000"));
         }
-        if ((aThree.getText().toString().toLowerCase().equals(correctAnswers[chosenQuestions[3]].toLowerCase()))
-                || (aOne.getText().toString().toLowerCase().equals(altCorrectAnswers[chosenQuestions[1]].toLowerCase())))
+        if ((aThree.getText().toString().toLowerCase().equals(correctAnswers[chosenQuestions[2]].toLowerCase()))
+                || (aOne.getText().toString().toLowerCase().equals(altCorrectAnswers[chosenQuestions[2]].toLowerCase())))
         {
             points = points + 1;
             aThree.setTextColor(Color.parseColor("#19FA19"));
         }else {
             String pom = aThree.getText().toString();
-            pom = pom + "( " +correctAnswers[chosenQuestions[3]] + ")";
+            pom = pom + "( " +correctAnswers[chosenQuestions[2]] + ")";
             aThree.setText(pom);
             aThree.setTextColor(Color.parseColor("#ff0000"));
         }
-        if ((aFour.getText().toString().toLowerCase().equals(correctAnswers[chosenQuestions[4]].toLowerCase()))
-                || (aOne.getText().toString().toLowerCase().equals(altCorrectAnswers[chosenQuestions[1]].toLowerCase())))
+        if ((aFour.getText().toString().toLowerCase().equals(correctAnswers[chosenQuestions[3]].toLowerCase()))
+                || (aOne.getText().toString().toLowerCase().equals(altCorrectAnswers[chosenQuestions[3]].toLowerCase())))
         {
             points = points + 1;
             aFour.setTextColor(Color.parseColor("#19FA19"));
         }else {
             String pom = aFour.getText().toString();
-            pom = pom + " (" +correctAnswers[chosenQuestions[4]] + ")";
+            pom = pom + " (" +correctAnswers[chosenQuestions[3]] + ")";
             aFour.setText(pom);
             aFour.setTextColor(Color.parseColor("#ff0000"));
         }
-        if ((aFive.getText().toString().toLowerCase().equals(correctAnswers[chosenQuestions[5]].toLowerCase()))
-                || (aOne.getText().toString().toLowerCase().equals(altCorrectAnswers[chosenQuestions[1]].toLowerCase())))
+        if ((aFive.getText().toString().toLowerCase().equals(correctAnswers[chosenQuestions[4]].toLowerCase()))
+                || (aOne.getText().toString().toLowerCase().equals(altCorrectAnswers[chosenQuestions[4]].toLowerCase())))
         {
             points = points + 1;
             aFive.setTextColor(Color.parseColor("#19FA19"));
         }else {
             String pom = aFive.getText().toString();
-            pom = pom + " (" +correctAnswers[chosenQuestions[5]] + ")";
+            pom = pom + " (" +correctAnswers[chosenQuestions[4]] + ")";
             aFive.setText(pom);
             aFive.setTextColor(Color.parseColor("#ff0000"));
         }
@@ -142,82 +145,94 @@ public class TestActivity extends AppCompatActivity {
 
     private void chooseQuestionsFunc()
     {
-        for (int i = 0; i < 5 ; i++) {
-            int randomNum = ThreadLocalRandom.current().nextInt(0, 9);
-            chosenQuestions[i] = randomNum;
+        ArrayList<Integer> a = new ArrayList<>(10);
+        for (int i = 0; i <= 9; i++){
+            a.add(i);
         }
-        qOne.setText(questions[chosenQuestions[1]]);
-        qTwo.setText(questions[chosenQuestions[2]]);
-        qThree.setText(questions[chosenQuestions[3]]);
-        qFour.setText(questions[chosenQuestions[4]]);
-        qFive.setText(questions[chosenQuestions[5]]);
+        Collections.shuffle(a);
+        for(int y = 0 ; y < 5 ; y++)
+        {
+            chosenQuestions[y] = a.get(y);
+            Log.e("Number " , Integer.toString(chosenQuestions[y]));
+        }
+        qOne.setText(questions[chosenQuestions[0]]);
+        qTwo.setText(questions[chosenQuestions[1]]);
+        qThree.setText(questions[chosenQuestions[2]]);
+        qFour.setText(questions[chosenQuestions[3]]);
+        qFive.setText(questions[chosenQuestions[4]]);
 
     }
 
     private void chooseReversedQuestionsFunc()
     {
-        for (int i = 0; i < 5 ; i++) {
-            int randomNum = ThreadLocalRandom.current().nextInt(0, 9);
-            chosenQuestions[i] = randomNum;
+        ArrayList<Integer> a = new ArrayList<>(10);
+        for (int i = 0; i <= 9; i++){
+            a.add(i);
         }
-        qOne.setText(correctAnswers[chosenQuestions[1]]);
-        qTwo.setText(correctAnswers[chosenQuestions[2]]);
-        qThree.setText(correctAnswers[chosenQuestions[3]]);
-        qFour.setText(correctAnswers[chosenQuestions[4]]);
-        qFive.setText(correctAnswers[chosenQuestions[5]]);
+        Collections.shuffle(a);
+        for(int y = 0 ; y < 5 ; y++)
+        {
+            chosenQuestions[y] = a.get(y);
+            Log.e("Number " , Integer.toString(chosenQuestions[y]));
+        }
+        qOne.setText(correctAnswers[chosenQuestions[0]]);
+        qTwo.setText(correctAnswers[chosenQuestions[1]]);
+        qThree.setText(correctAnswers[chosenQuestions[2]]);
+        qFour.setText(correctAnswers[chosenQuestions[3]]);
+        qFive.setText(correctAnswers[chosenQuestions[4]]);
     }
 
     private void checkReversedAnswers()
     {
         int points = 0;
 
-        if ((aOne.getText().toString().toLowerCase().equals(questions[chosenQuestions[1]].toLowerCase())))
+        if ((aOne.getText().toString().toLowerCase().equals(questions[chosenQuestions[0]].toLowerCase())))
         {
             points = points + 1;
             aOne.setTextColor(Color.parseColor("#19FA19"));
         }else {
             String pom = aOne.getText().toString();
-            pom = pom + " (" + questions[chosenQuestions[1]] + ")";
+            pom = pom + " (" + questions[chosenQuestions[0]] + ")";
             aOne.setText(pom);
             aOne.setTextColor(Color.parseColor("#ff0000"));
         }
-        if ((aTwo.getText().toString().toLowerCase().equals(questions[chosenQuestions[2]].toLowerCase())))
+        if ((aTwo.getText().toString().toLowerCase().equals(questions[chosenQuestions[1]].toLowerCase())))
         {
             points = points + 1;
             aTwo.setTextColor(Color.parseColor("#19FA19"));
         }else {
             String pom = aTwo.getText().toString();
-            pom = pom + " (" + questions[chosenQuestions[2]] + ")";
+            pom = pom + " (" + questions[chosenQuestions[1]] + ")";
             aTwo.setText(pom);
             aTwo.setTextColor(Color.parseColor("#ff0000"));
         }
-        if ((aThree.getText().toString().toLowerCase().equals(correctAnswers[chosenQuestions[3]].toLowerCase())))
+        if ((aThree.getText().toString().toLowerCase().equals(correctAnswers[chosenQuestions[2]].toLowerCase())))
         {
             points = points + 1;
             aThree.setTextColor(Color.parseColor("#19FA19"));
         }else {
             String pom = aThree.getText().toString();
-            pom = pom + "( " + questions[chosenQuestions[3]] + ")";
+            pom = pom + "( " + questions[chosenQuestions[2]] + ")";
             aThree.setText(pom);
             aThree.setTextColor(Color.parseColor("#ff0000"));
         }
-        if ((aFour.getText().toString().toLowerCase().equals(questions[chosenQuestions[4]].toLowerCase())))
+        if ((aFour.getText().toString().toLowerCase().equals(questions[chosenQuestions[3]].toLowerCase())))
         {
             points = points + 1;
             aFour.setTextColor(Color.parseColor("#19FA19"));
         }else {
             String pom = aFour.getText().toString();
-            pom = pom + " (" + questions[chosenQuestions[4]] + ")";
+            pom = pom + " (" + questions[chosenQuestions[3]] + ")";
             aFour.setText(pom);
             aFour.setTextColor(Color.parseColor("#ff0000"));
         }
-        if ((aFive.getText().toString().toLowerCase().equals(questions[chosenQuestions[5]].toLowerCase())))
+        if ((aFive.getText().toString().toLowerCase().equals(questions[chosenQuestions[4]].toLowerCase())))
         {
             points = points + 1;
             aFive.setTextColor(Color.parseColor("#19FA19"));
         }else {
             String pom = aFive.getText().toString();
-            pom = pom + " (" + questions[chosenQuestions[5]] + ")";
+            pom = pom + " (" + questions[chosenQuestions[4]] + ")";
             aFive.setText(pom);
             aFive.setTextColor(Color.parseColor("#ff0000"));
         }

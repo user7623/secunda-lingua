@@ -8,6 +8,7 @@ import android.media.SoundPool;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -25,6 +26,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import static com.example.diplomska.translations.getImagesIdsGlobal;
 
@@ -34,8 +36,6 @@ public class VocabularyActivity extends AppCompatActivity {
     private int sound1;
     private int questionNumber = 0;
     String[] imagesList;
-    int currentQuestionNumber = 1;
-    int points = 0;
     String hintString = "";
     ImageView theImageView;
     TextView resultTextView;
@@ -46,7 +46,9 @@ public class VocabularyActivity extends AppCompatActivity {
     SeekBar seekBar;
     int seekBarProgress = 0;
     boolean correctAnswerFlag = true;
-
+    private TextToSpeech tts;
+    String stringForPronouncing;
+    ImageView listenAgainButton;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,7 +63,7 @@ public class VocabularyActivity extends AppCompatActivity {
         answer = (EditText) findViewById(R.id.vocabularyEditTextAnswer);
         imagesList = getImagesIdsGlobal();
         seekBar = (SeekBar) findViewById(R.id.seekBarVocabulary);
-
+        listenAgainButton = (ImageView) findViewById(R.id.listenAgainButtonVocabulary);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -113,11 +115,34 @@ public class VocabularyActivity extends AppCompatActivity {
         }
 
         sound1 = soundPool.load(this, R.raw.sound1, 1);
+        tts = new TextToSpeech(VocabularyActivity.this, new TextToSpeech.OnInitListener() {
 
+            @Override
+            public void onInit(int status) {
+                // TODO Auto-generated method stub
+                if (status == TextToSpeech.SUCCESS) {
+                    int result = tts.setLanguage(Locale.UK);
+                    if (result == TextToSpeech.LANG_MISSING_DATA ||
+                            result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                        Log.e("error", "This Language is not supported");
+                    } else {
+                        ConvertTextToSpeech();
+                    }
+                } else
+                    Log.e("error", "Initialization of TextToSpeech Failed!");
+            }
+        });
+        listenAgainButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ConvertTextToSpeech();
+            }
+        });
         giveQuestionFunc();
     }
 
     public void giveQuestionFunc() {
+
         Log.d("info:", "setting question, question number is" + questionNumber);
 //        Log.e("images names ", imagesList[questionNumber] + imagesList[questionNumber + 1] + imagesList[questionNumber + 2]);
 
@@ -125,6 +150,8 @@ public class VocabularyActivity extends AppCompatActivity {
         String imageLocation = "drawable/" + imageName;
         int id = getResources().getIdentifier(imageLocation, "id", "com.example.diplomska");
         theImageView.setImageResource(id);
+        stringForPronouncing = imageName;
+        ConvertTextToSpeech();
     }
 
     private void nextQuestionFunc() {
@@ -217,7 +244,19 @@ public class VocabularyActivity extends AppCompatActivity {
         }
         Log.d("info", "ending translate activity --------------------------------------");
         Intent endTranslateActivity = new Intent(VocabularyActivity.this, MainActivity.class);
+        stringForPronouncing = "";
         startActivity(endTranslateActivity);
+    }
+
+    private void ConvertTextToSpeech () {
+        // TODO Auto-generated method stub
+        String text = stringForPronouncing;
+
+        if (text == null || "".equals(text)) {
+            text = "Content not available";
+            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+        } else
+            tts.speak(text , TextToSpeech.QUEUE_FLUSH, null);
     }
 
 }
