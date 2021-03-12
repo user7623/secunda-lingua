@@ -6,33 +6,19 @@
     android:orientation="vertical"
     >
 
-    <LinearLayout
-        android:id="@+id/loginLinearLayout"
+    <Button
+
+        android:id="@+id/singUpButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_gravity="center"
-        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/custom_button"
+        android:padding="10sp"
+        android:text="switch to Sing up"
+        android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        >
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="login"
-            android:id="@+id/loginButton"
-            android:textSize="20sp"
-            android:padding="10sp"
-            />
-        <Button
-            android:id="@+id/singUpButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10sp"
-            android:text="Sing up"
-            android:textSize="20sp"
-            />
-    </LinearLayout>
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     <TextView
         android:id="@+id/errorTextView"
         android:layout_width="wrap_content"
@@ -42,7 +28,7 @@
         android:textColor="#ff0000"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginLinearLayout"
+        app:layout_constraintTop_toBottomOf="@+id/singUpButton"
         android:paddingTop="36sp"
         android:paddingBottom="36sp"
         />
@@ -60,7 +46,7 @@
         />
     <EditText
         android:id="@+id/usernameEditText"
-        android:layout_width="200sp"
+        android:layout_width="242sp"
         android:layout_height="42sp"
         android:padding="12sp"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -140,5 +126,17 @@
             android:background="@drawable/ic_show"
             />
     </LinearLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="login"
+        android:id="@+id/loginButton"
+        android:textSize="20sp"
+        android:padding="10sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/passwordConfirmEditTextLayout"
 
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
