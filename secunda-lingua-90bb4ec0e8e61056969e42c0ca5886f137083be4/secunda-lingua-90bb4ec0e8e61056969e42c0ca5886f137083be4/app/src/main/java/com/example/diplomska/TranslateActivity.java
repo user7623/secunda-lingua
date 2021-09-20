@@ -174,7 +174,6 @@ public class TranslateActivity extends AppCompatActivity {
         //soodvetno izvestuvanje
         if (correctAnswerFlag)
         {
-
             boolean motivate = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("motivation", false);
             if (seekBarProgress >= 100)
             {
@@ -202,7 +201,6 @@ public class TranslateActivity extends AppCompatActivity {
                 public void onFinish() {
                     nextQuestionFunc();
                 }
-
                 public void onTick(long millisUntilFinished) {
 
                 }
@@ -250,39 +248,6 @@ public class TranslateActivity extends AppCompatActivity {
         toast.show();
     }
 
-    public void startTimer() {
-        Log.i("info: ", "Starting timer");
-        stopTimerTask();
-        timer = new Timer();
-
-        initializeTimerTask();
-
-        Log.i("info: ", "Scheduling timer...");
-        timer.schedule(timerTask, 1000, 1000);
-    }
-
-    public void initializeTimerTask() {
-        Log.i("info: ", "initialising TimerTask");
-        timerTask = new TimerTask() {
-            public void run() {
-                Log.i("in timer", "in timer ++++  " + (counter++));
-
-                if(counter == 1)
-                {
-                    nextQuestionFunc();
-                    stopTimerTask();
-                }
-            }
-        };
-    }
-
-    public void stopTimerTask() {
-        if (timer != null) {
-            timer.cancel();
-            timer = null;
-        }
-    }
-
     public  void giveQuestionFunc()
     {
         Log.d("info:" , "setting question, question number is" + questionNumber);
@@ -323,8 +288,9 @@ public class TranslateActivity extends AppCompatActivity {
     {
         questionNumber = chosenQuestions[count];
         count++;
-        if (count >= 10)
-            count = 0;
+        if (count >= 9) {
+            count = 1;
+        }
         questionText.setText(questionsList.get(questionNumber));
         answerText.setText("");
     }
