@@ -41,17 +41,15 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (notificationsSwitch.isActivated()) {
-                    Log.d("info" , "Notifications are activated");
+                if (notificationsSwitch.isChecked()) {
                     SharedPreferences preferences = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
 
                     PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putInt("timeOfDay", hourTextViewValue).apply();
 
                     activateNotificationsFunction();
-                }else if (!notificationsSwitch.isActivated())
+                }else if (!notificationsSwitch.isChecked())
                 {
-                    Log.d("info" , "Notifications are deactivated");
                     SharedPreferences preferences = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
 
@@ -61,14 +59,12 @@ public class SettingsActivity extends AppCompatActivity {
                 }
                 if (motivationSwitch.isActivated())
                 {
-                    Log.d("info" , "Motivational messages are activated");
                     SharedPreferences preferences = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
 
                     PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putBoolean("motivation", true).apply();
                 }else if (!motivationSwitch.isActivated())
                 {
-                    Log.d("info" , "Motivational messages are deactivated");
                     SharedPreferences preferences = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
 
@@ -109,7 +105,6 @@ public class SettingsActivity extends AppCompatActivity {
                     activateNotificationsFunction();
                     // kod za deaktiviranje na notifications
                 }else {
-                    // Tuka vnesi kod za promena na promenlivata za notifikacii
                     notificationsAreActivated = true;
                     Toast.makeText(SettingsActivity.this, "Notifications are turned on", Toast.LENGTH_SHORT).show();
                     Calendar calendar = Calendar.getInstance();

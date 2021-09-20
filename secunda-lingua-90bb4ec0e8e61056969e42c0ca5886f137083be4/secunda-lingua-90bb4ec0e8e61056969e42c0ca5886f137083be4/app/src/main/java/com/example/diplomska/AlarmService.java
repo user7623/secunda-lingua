@@ -43,7 +43,6 @@ public class AlarmService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        Log.e("Info" , "onStartCommand in AlarmService --------------------------------");
         enableReminder();
 
         return START_NOT_STICKY;
@@ -56,19 +55,16 @@ public class AlarmService extends Service {
 
     private void enableReminder()
     {
-        Log.e("Info" , "enable reminder --------------------------------");
         SharedPreferences preferences = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
-        int hourOfDay = 16;//PreferenceManager.getDefaultSharedPreferences(AlarmService.this).getInt("hourOfDay", 0);
-        Log.e("Info" , "enable reminder part 2 --------------------------------");
+        int timeOfDay = PreferenceManager.getDefaultSharedPreferences(AlarmService.this).getInt("timeOfDay", 12);
         try {
-            if (hourOfDay != 0) {
+            Log.e("here", timeOfDay + ".....");
+            if (timeOfDay != 0) {
                 Calendar c = Calendar.getInstance();
-                c.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                c.set(Calendar.HOUR_OF_DAY, timeOfDay);
                 c.set(Calendar.MINUTE, 0);
                 c.set(Calendar.SECOND, 0);
-                Log.e("Info" , "starting alarm " + hourOfDay + "--------------------------------");
                 startAlarm(c);
-                Log.e("Info" , "after starting alarm --------------------------------");
             } else {
                 cancelAlarm();
             }
@@ -79,7 +75,6 @@ public class AlarmService extends Service {
     }
 
     private void startAlarm(Calendar c) {
-        Log.e("Info" , "start Alarm ---------------------------------------------------");
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(this, AlertReceiver.class);
         intent.setAction("reminderAction");
@@ -95,7 +90,6 @@ public class AlarmService extends Service {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 1, intent, 0);
         alarmManager.cancel(pendingIntent);
 
-        Log.d("info", "Alarm canceled -------------------------------------------------");
     }
 
 }
