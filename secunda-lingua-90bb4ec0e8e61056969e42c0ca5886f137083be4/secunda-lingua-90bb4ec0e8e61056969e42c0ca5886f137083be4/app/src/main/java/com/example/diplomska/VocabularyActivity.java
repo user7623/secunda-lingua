@@ -41,7 +41,6 @@ public class VocabularyActivity extends AppCompatActivity {
     String[] imagesList;
     String hintString = "";
     ImageView theImageView;
-    //TextView resultTextView;
     Button quitButton;
     Button submitButton;
     Button questionMarkButton;
@@ -57,12 +56,9 @@ public class VocabularyActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vocabulary);
-        //TODO: povik do databaza
-        //TODO: inicijalni vrednosti za promenlivite
         questionMarkButton = (Button) findViewById(R.id.questionMarkButtonVocabulary);
         submitButton = (Button) findViewById(R.id.vocabularySubmitButton);
         quitButton = (Button) findViewById(R.id.quitButtonOnVocabulary);
-       // resultTextView = (TextView) findViewById(R.id.correctIncorrectTextViewVocabulary);
         theImageView = (ImageView) findViewById(R.id.vocabularyPicture);
         answer = (EditText) findViewById(R.id.vocabularyEditTextAnswer);
         imagesList = getImagesIdsGlobal();
@@ -94,7 +90,6 @@ public class VocabularyActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("info: ", "entered onClick");
                 checkAnswerFunction();
             }
         });
@@ -123,7 +118,6 @@ public class VocabularyActivity extends AppCompatActivity {
 
             @Override
             public void onInit(int status) {
-                // TODO Auto-generated method stub
                 if (status == TextToSpeech.SUCCESS) {
                     int result = tts.setLanguage(Locale.UK);
                     if (result == TextToSpeech.LANG_MISSING_DATA ||
@@ -151,10 +145,6 @@ public class VocabularyActivity extends AppCompatActivity {
     }
 
     public void giveQuestionFunc() {
-
-        Log.d("info:", "setting question, question number is" + questionNumber);
-        //Log.e("images names ", imagesList[questionNumber] + imagesList[questionNumber + 1] + imagesList[questionNumber + 2]);
-        //se korsiti listata za da bide slucajno izbrano prasanjeto
         String imageName = imagesList[chosenPictures.get(questionNumber)];
         String imageLocation = "drawable/" + imageName;
         int id = getResources().getIdentifier(imageLocation, "id", "com.example.diplomska");
@@ -167,14 +157,9 @@ public class VocabularyActivity extends AppCompatActivity {
         questionNumber++;
         giveQuestionFunc();
         answer.setText("");
-        //questionText.setText(questionsList.get(questionNumber));
     }
 
     public void checkAnswerFunction() {
-        Log.d("info: ", "entered checkAnswerFunction");
-
-        //TODO: kod za proverka na odgovorot
-
         String answerGiven = answer.getText().toString();
         String answerRequired = imagesList[chosenPictures.get(questionNumber)];
 
@@ -203,13 +188,11 @@ public class VocabularyActivity extends AppCompatActivity {
         }
         new CountDownTimer(3500, 1000) {
             public void onFinish() {
-                Log.e("next question:" , ".............................................");
                 if (seekBarProgress < 100) {
                     nextQuestionFunc();
                 }
             }
             public void onTick(long millisUntilFinished) {
-
             }
         }.start();
     }
@@ -242,7 +225,6 @@ public class VocabularyActivity extends AppCompatActivity {
     {
 
         if (seekBarProgress >= 100) {
-            Log.e("info", "saving points --------------------------------------------------");
             SharedPreferences preferences = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
 
@@ -251,17 +233,12 @@ public class VocabularyActivity extends AppCompatActivity {
             Score = Score + seekBarProgress;
             PreferenceManager.getDefaultSharedPreferences(VocabularyActivity.this).edit().putInt("Score", Score).apply();
         }
-        Log.e("info", "ending translate activity --------------------------------------");
-
-
-
         Intent endTranslateActivity = new Intent(VocabularyActivity.this, MainActivity.class);
         stringForPronouncing = "";
         startActivity(endTranslateActivity);
     }
 
     private void ConvertTextToSpeech () {
-        // TODO Auto-generated method stub
         String text = stringForPronouncing;
 
         if (text == null || "".equals(text)) {

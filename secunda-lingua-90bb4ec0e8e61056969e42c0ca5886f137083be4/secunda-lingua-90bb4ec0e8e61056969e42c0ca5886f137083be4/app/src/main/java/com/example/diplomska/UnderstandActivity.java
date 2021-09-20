@@ -96,7 +96,6 @@ public class UnderstandActivity extends AppCompatActivity {
                             Log.e("next question:", ".............................................");
                             int id = getResources().getIdentifier("drawable/play_sound_icon", "id", "com.example.diplomska");
                             imageView.setImageResource(id);
-                            //nextQuestionFunc();
                         }
 
                         public void onTick(long millisUntilFinished) {
@@ -131,7 +130,6 @@ public class UnderstandActivity extends AppCompatActivity {
 
                 }
             });
-            //popolni gi listite so prasanja i soodvetni odgovori za istite
 
             submitAnswer.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -199,9 +197,6 @@ public class UnderstandActivity extends AppCompatActivity {
 
         }
         public void checkAnswerFunction () {
-            Log.d("info: ", "entered checkAnswerFunction*******************************");
-
-            //TODO: kod za proverka na odgovorot
 
             String answered = answer.getText().toString();
             String needed = questionsList.get(questionNumber);
@@ -213,7 +208,6 @@ public class UnderstandActivity extends AppCompatActivity {
                 boolean motivation = SettingsActivity.wantsMotivationalMsg;
                 if ((seekBarProgress == 40 || seekBarProgress == 80) && motivation)
                 {
-                    Log.d("info: " , "Correct answer plus motivation");
                     showMotivationalMessage();
                 }
             }else{
@@ -262,7 +256,6 @@ public class UnderstandActivity extends AppCompatActivity {
         private void endCourseFunc ()
         {
             if (seekBarProgress >= 100) {
-                Log.d("info", "saving points --------------------------------------------------");
                 SharedPreferences preferences = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
                 SharedPreferences.Editor editor = preferences.edit();
 
@@ -271,17 +264,14 @@ public class UnderstandActivity extends AppCompatActivity {
                 Score = Score + seekBarProgress;
                 PreferenceManager.getDefaultSharedPreferences(UnderstandActivity.this).edit().putInt("Score", Score).apply();
             }
-            Log.d("info", "ending translate activity --------------------------------------");
             Intent endTranslateActivity = new Intent(UnderstandActivity.this, MainActivity.class);
             startActivity(endTranslateActivity);
         }
 
         private void nextQuestionFunc () {
 
-            Log.e("$$$$$", "question number: " + questionNumber);
             questionNumber = chosenQuestions[counter];
             counter++;
-            Log.e("$$$$$", "question number: " + questionNumber);
             if (seekBarProgress < 100) {
                 giveQuestionFunc();
             }
@@ -293,7 +283,6 @@ public class UnderstandActivity extends AppCompatActivity {
                 endCourseFunc();
                 return;
             }
-            Log.d("info:", "setting question, question number is " + questionNumber);
             answer.setText("");
             stringForPronouncing = questionsList.get(questionNumber);
             ConvertTextToSpeech();
@@ -301,8 +290,6 @@ public class UnderstandActivity extends AppCompatActivity {
 
         public void readFromDb ()
         {
-            //TODO: napravi da cita od db !!!
-            Log.e("info", "reading from database for understanding activity **************");
             Cursor mCursor = mDatabase.query(translateExercise.TranslateEntry.TABLE_NAME,
                     null,
                     null,
@@ -313,13 +300,11 @@ public class UnderstandActivity extends AppCompatActivity {
             mCursor.moveToFirst();
 
             int count = mCursor.getCount();
-            Log.d("info ", "found " + String.valueOf(count) + "number of rows in database **********");
             while (!mCursor.isAfterLast()) {
                 String sent;
                 String translation;
                 sent = mCursor.getString(mCursor.getColumnIndex(translateExercise.TranslateEntry.COLUMN_SENTENCE));
                 translation = mCursor.getString(mCursor.getColumnIndex(translateExercise.TranslateEntry.COLUMN_TRANSLATION));
-                Log.e("READING FROM DATABASE:", sent + translation);
 
                 questionsList.add(sent);
 
@@ -329,7 +314,6 @@ public class UnderstandActivity extends AppCompatActivity {
         }
 
         private void ConvertTextToSpeech () {
-            // TODO Auto-generated method stub
             String text = stringForPronouncing;
 
             if (text == null || "".equals(text)) {
@@ -362,7 +346,6 @@ public class UnderstandActivity extends AppCompatActivity {
             seekBar.setProgressTintList(ColorStateList.valueOf(Color.RED));
         }
     }
-
 }
 
 

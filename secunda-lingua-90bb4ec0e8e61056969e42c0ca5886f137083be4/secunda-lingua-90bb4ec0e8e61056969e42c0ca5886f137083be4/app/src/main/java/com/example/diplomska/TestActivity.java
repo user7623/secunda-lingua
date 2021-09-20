@@ -186,7 +186,7 @@ public class TestActivity extends AppCompatActivity {
     {
         int points = 0;
 
-        if ((aOne.getText().toString().toLowerCase().equals(questions[chosenQuestions[0]].toLowerCase())))
+        if ((aOne.getText().toString().toLowerCase().trim().equals(questions[chosenQuestions[0]].toLowerCase())))
         {
             points = points + 1;
             aOne.setTextColor(Color.parseColor("#19FA19"));
@@ -196,7 +196,7 @@ public class TestActivity extends AppCompatActivity {
             aOne.setText(pom);
             aOne.setTextColor(Color.parseColor("#ff0000"));
         }
-        if ((aTwo.getText().toString().toLowerCase().equals(questions[chosenQuestions[1]].toLowerCase())))
+        if ((aTwo.getText().toString().toLowerCase().trim().equals(questions[chosenQuestions[1]].toLowerCase())))
         {
             points = points + 1;
             aTwo.setTextColor(Color.parseColor("#19FA19"));
@@ -206,7 +206,7 @@ public class TestActivity extends AppCompatActivity {
             aTwo.setText(pom);
             aTwo.setTextColor(Color.parseColor("#ff0000"));
         }
-        if ((aThree.getText().toString().toLowerCase().equals(correctAnswers[chosenQuestions[2]].toLowerCase())))
+        if ((aThree.getText().toString().toLowerCase().trim().equals(correctAnswers[chosenQuestions[2]].toLowerCase())))
         {
             points = points + 1;
             aThree.setTextColor(Color.parseColor("#19FA19"));
@@ -216,7 +216,7 @@ public class TestActivity extends AppCompatActivity {
             aThree.setText(pom);
             aThree.setTextColor(Color.parseColor("#ff0000"));
         }
-        if ((aFour.getText().toString().toLowerCase().equals(questions[chosenQuestions[3]].toLowerCase())))
+        if ((aFour.getText().toString().toLowerCase().trim().equals(questions[chosenQuestions[3]].toLowerCase())))
         {
             points = points + 1;
             aFour.setTextColor(Color.parseColor("#19FA19"));
@@ -226,7 +226,7 @@ public class TestActivity extends AppCompatActivity {
             aFour.setText(pom);
             aFour.setTextColor(Color.parseColor("#ff0000"));
         }
-        if ((aFive.getText().toString().toLowerCase().equals(questions[chosenQuestions[4]].toLowerCase())))
+        if ((aFive.getText().toString().toLowerCase().trim().equals(questions[chosenQuestions[4]].toLowerCase())))
         {
             points = points + 1;
             aFive.setTextColor(Color.parseColor("#19FA19"));
@@ -239,5 +239,4 @@ public class TestActivity extends AppCompatActivity {
         String pomString = "Score: " + Integer.toString(points) + "/5";
         score.setText(pomString);
     }
-
 }

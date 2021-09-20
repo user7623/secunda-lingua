@@ -43,12 +43,11 @@ import java.util.TimerTask;
 public class TranslateActivity extends AppCompatActivity {
 
     private SoundPool soundPool;
-    private int sound1, sound2;
+    private int sound1;
     private SQLiteDatabase mDatabase;
     String hintString = "";
     private static Timer timer;
     private static TimerTask timerTask;
-    long oldTime = 0;
     private int counter = 0;
     private int count = 0;
     boolean correctAnswerFlag = true;
@@ -151,10 +150,8 @@ public class TranslateActivity extends AppCompatActivity {
     {
         Log.d("info: " , "entered checkAnswerFunction");
 
-        //TODO: kod za proverka na odgovorot
-
         String answerGiven = answerText.getText().toString().toLowerCase();
-        String answerRequired = translationsList.get(questionNumber); //answersArray[questionNumber];
+        String answerRequired = translationsList.get(questionNumber);
         String alAnswerRequired = altTranslationsList.get(questionNumber);
         Log.e("info: " , answerGiven + answerRequired + alAnswerRequired);
         if (answerText.getText().toString().toLowerCase().equals(translationsList.get(questionNumber).toLowerCase())
@@ -183,7 +180,7 @@ public class TranslateActivity extends AppCompatActivity {
             {
                 endCourseFunc();
             }
-            if (questionNumber == 3 /*&& motivate*/)
+            if ((seekBarProgress == 40 || seekBarProgress == 80) && motivate)
             {
                 Log.d("info: " , "Correct answer");
                 showMotivationalMessage();
@@ -195,14 +192,12 @@ public class TranslateActivity extends AppCompatActivity {
             Log.d("info: " , "Incorrect answer");
             showWrongToast();
         }
-        //edit text poleto isprazni go
         answerText.setText("");
 
         if (questionNumber == (numberOfQuestions - 1))
         {
             endCourseFunc();
         } else {
-            //startTimer();
             new CountDownTimer(2500, 1000) {
                 public void onFinish() {
                     nextQuestionFunc();
@@ -212,7 +207,6 @@ public class TranslateActivity extends AppCompatActivity {
 
                 }
             }.start();
-            //nextQuestionFunc();
         }
         setSeekBarColor();
     }
@@ -293,12 +287,10 @@ public class TranslateActivity extends AppCompatActivity {
     {
         Log.d("info:" , "setting question, question number is" + questionNumber);
         questionText.setText(questionsList.get(questionNumber));
-        //questionNumber++;
     }
 
     public void readFromDb()
     {
-        //TODO: napravi da cita od db !!!
         Cursor mCursor = mDatabase.query(translateExercise.TranslateEntry.TABLE_NAME,
                 null,
                 null,
@@ -309,25 +301,22 @@ public class TranslateActivity extends AppCompatActivity {
         mCursor.moveToFirst();
 
         int count = mCursor.getCount();
-        Log.d("info " , "found " + String.valueOf(count) + "number of rows in database **********");
         while (!mCursor.isAfterLast())
         {
-            String sent;
+            String sentence;
             String translation;
             String altTranslation;
-            sent = mCursor.getString(mCursor.getColumnIndex(translateExercise.TranslateEntry.COLUMN_SENTENCE));
+            sentence = mCursor.getString(mCursor.getColumnIndex(translateExercise.TranslateEntry.COLUMN_SENTENCE));
             translation = mCursor.getString(mCursor.getColumnIndex(translateExercise.TranslateEntry.COLUMN_TRANSLATION));
             altTranslation = mCursor.getString(mCursor.getColumnIndex(translateExercise.TranslateEntry.COLUMN_ALT_TRANSLATION));
-            Log.e("READING FROM DATABASE:" , sent + translation);
-
-            questionsList.add(sent);
+           
+            questionsList.add(sentence);
             translationsList.add(translation);
             altTranslationsList.add(altTranslation);
             mCursor.moveToNext();
         }
 
         mCursor.close();
-
     }
 
     private void nextQuestionFunc()
@@ -341,7 +330,6 @@ public class TranslateActivity extends AppCompatActivity {
     private void endCourseFunc()
     {
         if (seekBarProgress >= 100) {
-            Log.d("info", "saving points --------------------------------------------------");
             SharedPreferences preferences = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
             SharedPreferences.Editor editor = preferences.edit();
 
@@ -351,7 +339,6 @@ public class TranslateActivity extends AppCompatActivity {
             PreferenceManager.getDefaultSharedPreferences(TranslateActivity.this).edit().putInt("Score", Score).apply();
         }
 
-        Log.d("info", "ending translate activity --------------------------------------");
         Intent endTranslateActivity = new Intent(TranslateActivity.this, MainActivity.class);
         startActivity(endTranslateActivity);
     }
