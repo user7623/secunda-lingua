@@ -78,17 +78,42 @@ public class DownloadMoreAction extends AppCompatActivity {
 
             if (e == null) {
                 try{
-                    for(ParseObject sentence : objects){
-                        sentencesList.add(sentence.getString("sentence"));
+
+                    String[] oldSentences = getSentencesArrayGlobal();
+                    String[] oldTranslations = getTranslationsArrayGlobal();
+                    String[] oldAlternativeTranslations = getAlternativeTranslationsarrayGlobal();
+
+                    for(ParseObject object : objects){
+                        String sentence = object.getString("sentence");
+                        ArrayList<String> oldSentencesList = new ArrayList<>();
+                        oldSentencesList.addAll(Arrays.asList(oldSentences).subList(0, oldSentences.length + 1));
+                        Log.e("contains:", Arrays.asList(oldSentences).contains(sentence) + "!");
+                        if (!oldSentencesList.contains(sentence))
+                        {
+                            Log.e("in sentece", sentence);
+                            sentencesList.add(sentence);
+                        }
                     }
-                    for(ParseObject translation : objects){
-                        translationsList.add(translation.getString("translation"));
+                    for(ParseObject object2 : objects){
+                        String translation = object2.getString("translation");
+                        if (!Arrays.asList(oldTranslations).contains(translation))
+                        {
+                            Log.e("in translation", translation);
+                            translationsList.add(translation);
+                        }
                     }
-                    for(ParseObject alt_translation : objects){
-                        altTranslationsList.add(alt_translation.getString("alternative_translation"));
+                    for(ParseObject object3 : objects){
+                        String alternative_translation = object3.getString("alternative_translation");
+                        if (!Arrays.asList(oldAlternativeTranslations).contains(alternative_translation))
+                        {
+                            Log.e("in alternative ", alternative_translation);
+                            altTranslationsList.add(alternative_translation);
+                        }
                     }
                     addToGlobalVars();
                 }catch (Exception exception){
+                    Log.e("sen", sentencesList.get(1) + sentencesList.get(2));
+                    Log.e("tra", translationsList.get(1) + translationsList.get(2));
                     Log.e("exception", exception.getLocalizedMessage());
                 }
             } else {

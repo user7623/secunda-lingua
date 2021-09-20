@@ -167,7 +167,10 @@ public class TranslateActivity extends AppCompatActivity {
             seekBar.setProgress(seekBarProgress);
             correctAnswerFlag = true;
         }else{
-            seekBarProgress = seekBarProgress - 20;
+            if (seekBarProgress >= 20)
+            {
+                seekBarProgress = seekBarProgress - 20;
+            }
             seekBar.setProgress(seekBarProgress);
             correctAnswerFlag = false;
         }
@@ -264,8 +267,14 @@ public class TranslateActivity extends AppCompatActivity {
                 null,
                 null);
         Random random = new Random();
-        //range of positions is between count of rows in db -10 & 1
-        mCursor.moveToPosition(random.nextInt((mCursor.getCount()-10) - 1) + 1);
+        Log.e("----", mCursor.getCount() + "------");
+        if (mCursor.getCount() == 10)
+        {
+            mCursor.moveToFirst();
+        } else {
+            mCursor.moveToPosition(random.nextInt((mCursor.getCount()-10) - 1) + 1);
+        }
+
         while (!mCursor.isAfterLast())
         {
             String sentence;
