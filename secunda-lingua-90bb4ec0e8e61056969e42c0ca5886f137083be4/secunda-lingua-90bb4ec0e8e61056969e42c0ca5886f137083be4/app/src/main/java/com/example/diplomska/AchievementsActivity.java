@@ -73,7 +73,6 @@ public class AchievementsActivity extends AppCompatActivity {
         @NonNull
         @Override
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-            Log.e("Position", "==============================" + position);
             int Score = PreferenceManager.getDefaultSharedPreferences(AchievementsActivity.this).getInt("Score", 0);
             LayoutInflater layoutInflater = (LayoutInflater)getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View row = layoutInflater.inflate(R.layout.row, parent, false);
@@ -83,18 +82,15 @@ public class AchievementsActivity extends AppCompatActivity {
 
             if ((position + 1) * 300 <= Score)
             {
-                // now set our resources on views
                 images.setImageResource(rImgs[position + 1]);
                 myTitle.setText(rTitle[position]);
                 myDescription.setText(rDescription[position]);
-                //return row;
             }
             else
             {
                 images.setImageResource(rImgs[0]);
                 myTitle.setText("Locked");
                 myDescription.setText("");
-                //return row;
             }
             return row;
         }

@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.SET_ALARM" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:name=".App"
@@ -13,12 +14,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Diplomska">
-        <service android:name=".AlarmService"></service>
-        <activity android:name=".TranslateActivity"></activity>
-        <activity android:name=".TestOneActivity"></activity>
-        <activity android:name=".TestActivity"></activity>
-        <activity android:name=".AchievementsActivity"></activity>
-        <activity android:name=".DownloadMoreAction"></activity>
+        <meta-data
+            android:name="com.parse.SERVER_URL"
+            android:value="@string/back4app_server_url" />
+        <meta-data
+            android:name="com.parse.APPLICATION_ID"
+            android:value="@string/back4app_app_id" />
+        <meta-data
+            android:name="com.parse.CLIENT_KEY"
+            android:value="@string/back4app_client_key" />
+        <service android:name=".AlarmService"/>
+        <activity android:name=".TranslateActivity"/>
+        <activity android:name=".TestOneActivity"/>
+        <activity android:name=".TestActivity"/>
+        <activity android:name=".AchievementsActivity"/>
+        <activity android:name=".DownloadMoreAction"/>
         <activity android:name=".SettingsActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -29,7 +39,7 @@
         </activity>
         <activity android:name=".VocabularyActivity" />
         <activity android:name=".UnderstandActivity" />
-        <receiver android:name=".BroadcastReceiver"></receiver>
+        <receiver android:name=".BroadcastReceiver"/>
         <receiver android:name=".AlertReceiver" />
     </application>
 

@@ -11,9 +11,7 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.text.Layout;
-import android.text.SpannableString;
-import android.text.style.AlignmentSpan;
+
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,6 +20,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.parse.Parse;
+import com.parse.ParseObject;
 
 import java.io.File;
 import java.util.Timer;
@@ -39,9 +40,7 @@ public class MainActivity extends AppCompatActivity {
     static String[] altTranslations;
     private static Timer timer;
     private static TimerTask timerTask;
-    long oldTime = 0;
     private int counter = 0;
-
 
     TextView scoreTextView;
 
@@ -49,6 +48,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Parse.initialize(new Parse.Configuration.Builder(this)
+                .applicationId(getString(R.string.back4app_app_id))
+                .clientKey(getString(R.string.back4app_client_key))
+                .server(getString(R.string.back4app_server_url))
+                .build());
+
+        ParseObject firstObject = new  ParseObject("FirstClass");
+        firstObject.put("message","Hey ! First message from android. Parse is now connected");
+        firstObject.saveInBackground(e -> {
+            if (e != null){
+                Log.e("MainActivity", e.getLocalizedMessage());
+            }else{
+                Log.d("MainActivity","Object saved.");
+            }
+        });
 
         TranslateDBHelper dbHelper = new TranslateDBHelper(this);
         mDatabase = dbHelper.getWritableDatabase();
@@ -101,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent testTwoIntent = new Intent(MainActivity.this, TestActivity.class);
-                //da smeni od mk na uk da se preveduva
+                //reverse languages uk-mk
                 testTwoIntent.putExtra("reverse", "NO");
                 startActivity(testTwoIntent);
             }
@@ -110,13 +125,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent testThreeIntent = new Intent(MainActivity.this, TestActivity.class);
-                //da smeni od mk na uk da se preveduva
+                //reverse languages uk-mk
                 testThreeIntent.putExtra("reverse", "YES");
                 startActivity(testThreeIntent);
             }
         });
-        Log.e("important!" , " !!!!!!!!!!!");
-
         if (!doesDatabaseExist(this, "mDatabase"))
         {
             Log.e("Database " , "Exists");
@@ -137,10 +150,9 @@ public class MainActivity extends AppCompatActivity {
         }
         else
         {
-            Log.e("ERROR", "No database !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            Log.e("ERROR", "No database!");
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -176,15 +188,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void addItem() {
-
-        //TODO: smeni go inicijalniot kod da ne koristi static final za debagiranje sto se
-        Log.d("info :" , "Entered in add item function **********");
         sentences = getSentencesArrayGlobal();
         translations = getTranslationsArrayGlobal();
         altTranslations = getAlternativeTranslationsarrayGlobal();
         ContentValues cv = new ContentValues();
         int count = sentences.length;
-        Log.e("Number" , "count is" + String.valueOf(count));
         for (int i = 0 ; i < count ; i++)
         {
             cv.put(translateExercise.TranslateEntry.COLUMN_SENTENCE, sentences[i]);
@@ -193,7 +201,6 @@ public class MainActivity extends AppCompatActivity {
             Log.d("info: " , "now putting number" + String.valueOf(i));
             mDatabase.insert(translateExercise.TranslateEntry.TABLE_NAME, null, cv);
         }
-
 
         Log.e("database: " , "initialized");
     }
@@ -205,22 +212,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void startTimer() {
-        Log.i("info: ", "Starting timer");
         stopTimerTask();
         timer = new Timer();
-
         initializeTimerTask();
-
-        Log.i("info: ", "Scheduling timer...");
         timer.schedule(timerTask, 1000, 1000);
     }
 
     public void initializeTimerTask() {
-        Log.i("info: ", "initialising TimerTask");
         timerTask = new TimerTask() {
             public void run() {
                 Log.i("in timer", "in timer ++++  " + (counter++));
-                // na sekoi 3 sec azuriraj go rezultatot-scoretextView
+                // on every three seconds update results-scoretextView
                 if(counter % 3 == 0)
                 {
                     SharedPreferences preferences = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
@@ -241,7 +243,4 @@ public class MainActivity extends AppCompatActivity {
             timer = null;
         }
     }
-
-
-
 }

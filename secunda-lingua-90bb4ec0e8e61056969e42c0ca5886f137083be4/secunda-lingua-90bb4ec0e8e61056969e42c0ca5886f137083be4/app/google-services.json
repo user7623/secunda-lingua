@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "129476135272",
+    "project_id": "words-e0e58",
+    "storage_bucket": "words-e0e58.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:129476135272:android:2fab3258560f6658622edd",
+        "android_client_info": {
+          "package_name": "com.example.diplomska"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "129476135272-tgl1ltac13nhp7nel5077ljmciq5iqp4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBD65m8hO3KS3WlcHUydvsYFMrAzhLNvLQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "129476135272-tgl1ltac13nhp7nel5077ljmciq5iqp4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
