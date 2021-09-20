@@ -13,6 +13,17 @@ public class translations {
     public static String[] imagesIdsGlobal = new String[]{"book" , "car" , "cat", "dog" , "food" , "house" , "pc" ,
             "pencil" , "phone" , "phone"};
 
+    public static void setSentencesArrayGlobal(String[] sentencesArrayGlobal) {
+        translations.sentencesArrayGlobal = sentencesArrayGlobal;
+    }
+
+    public static void setTranslationsArrayGlobal(String[] translationsArrayGlobal) {
+        translations.translationsArrayGlobal = translationsArrayGlobal;
+    }
+
+    public static void setAlternativeTranslationsarrayGlobal(String[] alternativeTranslationsarrayGlobal) {
+        translations.alternativeTranslationsarrayGlobal = alternativeTranslationsarrayGlobal;
+    }
 
     public static String[] getImagesIdsGlobal(){return imagesIdsGlobal;}
 

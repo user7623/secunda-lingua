@@ -34,7 +34,7 @@ import static com.example.diplomska.translations.getTranslationsArrayGlobal;
 
 public class MainActivity extends AppCompatActivity {
 
-    private SQLiteDatabase mDatabase;
+    private static SQLiteDatabase mDatabase;
     static String[] sentences;
     static String[] translations;
     static String[] altTranslations;
@@ -177,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void addItem() {
+    public static void addItem() {
         sentences = getSentencesArrayGlobal();
         translations = getTranslationsArrayGlobal();
         altTranslations = getAlternativeTranslationsarrayGlobal();

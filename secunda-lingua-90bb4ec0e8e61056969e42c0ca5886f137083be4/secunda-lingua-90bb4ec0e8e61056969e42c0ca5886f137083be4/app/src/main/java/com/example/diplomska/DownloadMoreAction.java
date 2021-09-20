@@ -19,22 +19,31 @@ import  com.android.volley.toolbox.Volley;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import static com.example.diplomska.translations.getAlternativeTranslationsarrayGlobal;
+import static com.example.diplomska.translations.getSentencesArrayGlobal;
+import static com.example.diplomska.translations.getTranslationsArrayGlobal;
+
+import static com.example.diplomska.translations.setAlternativeTranslationsarrayGlobal;
+import static com.example.diplomska.translations.setSentencesArrayGlobal;
+import static com.example.diplomska.translations.setTranslationsArrayGlobal;
 
 public class DownloadMoreAction extends AppCompatActivity {
 
     Button downloadButton;
     Button backButton;
 
+    ArrayList<String> translationsList = new ArrayList<>();
+    ArrayList<String> sentencesList = new ArrayList<>();
+    ArrayList<String> altTranslationsList = new ArrayList<>();
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_download_more);
-
-    /*
-    * Intent downloadIntent = new Intent(MainActivity.this, DownloadMoreAction.class);
-                startActivity(downloadIntent);
-    * */
 
         downloadButton = (Button) findViewById(R.id.downloadButton);
         backButton = (Button) findViewById(R.id.downloadMoreBackButton);
@@ -65,17 +74,22 @@ public class DownloadMoreAction extends AppCompatActivity {
     private void downloadMoreContent() {
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("sentences");
-        query.orderByDescending("createdAt");
         query.findInBackground((objects, e) -> {
 
             if (e == null) {
-                objects.get(1).getJSONArray(1);
-                for(ParseObject sentence : objects){
-
-                      Log.e("sentence", sentence.getString("sentence"));
-                }
-                for(ParseObject translation : objects){
-                    Log.e("sentence", translation.getString("translation"));
+                try{
+                    for(ParseObject sentence : objects){
+                        sentencesList.add(sentence.getString("sentence"));
+                    }
+                    for(ParseObject translation : objects){
+                        translationsList.add(translation.getString("translation"));
+                    }
+                    for(ParseObject alt_translation : objects){
+                        altTranslationsList.add(alt_translation.getString("alternative_translation"));
+                    }
+                    addToGlobalVars();
+                }catch (Exception exception){
+                    Log.e("exception", exception.getLocalizedMessage());
                 }
             } else {
                Log.e("Error", e.getMessage());
@@ -83,9 +97,26 @@ public class DownloadMoreAction extends AppCompatActivity {
         });
     }
 
-    private void addToDatabase(String newData)
+    private void addToGlobalVars()
     {
+        //we were using lists until now because they are easier to work with
+        //but setters for global vars work with arrays
+        // so we need to convert them accordingly
 
+        String[] newTranslationsArray = translationsList.toArray(new String[0]);
+        String[] newSentencesArray = sentencesList.toArray(new String[0]);
+        String[] newAltTranslationsArray = altTranslationsList.toArray(new String[0]);
+
+        setTranslationsArrayGlobal(newTranslationsArray);
+        setAlternativeTranslationsarrayGlobal(newAltTranslationsArray);
+        setSentencesArrayGlobal(newSentencesArray);
+
+        updateDatabase();
     }
 
+    private void updateDatabase() {
+        //function that already updates database,
+        // no need for rewriting code
+        MainActivity.addItem();
+    }
 }

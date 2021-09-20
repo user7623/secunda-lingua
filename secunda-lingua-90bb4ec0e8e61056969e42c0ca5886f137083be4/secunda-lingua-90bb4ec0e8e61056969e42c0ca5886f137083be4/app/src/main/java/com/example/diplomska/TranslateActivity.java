@@ -298,9 +298,9 @@ public class TranslateActivity extends AppCompatActivity {
                 null,
                 null,
                 null);
-        mCursor.moveToFirst();
-
-        int count = mCursor.getCount();
+        Random random = new Random();
+        //range of positions is between count of rows in db -10 & 1
+        mCursor.moveToPosition(random.nextInt((mCursor.getCount()-10) - 1) + 1);
         while (!mCursor.isAfterLast())
         {
             String sentence;
@@ -309,13 +309,13 @@ public class TranslateActivity extends AppCompatActivity {
             sentence = mCursor.getString(mCursor.getColumnIndex(translateExercise.TranslateEntry.COLUMN_SENTENCE));
             translation = mCursor.getString(mCursor.getColumnIndex(translateExercise.TranslateEntry.COLUMN_TRANSLATION));
             altTranslation = mCursor.getString(mCursor.getColumnIndex(translateExercise.TranslateEntry.COLUMN_ALT_TRANSLATION));
-           
             questionsList.add(sentence);
             translationsList.add(translation);
             altTranslationsList.add(altTranslation);
             mCursor.moveToNext();
-        }
 
+            Log.e("question", sentence + translation);
+        }
         mCursor.close();
     }
 
@@ -323,6 +323,8 @@ public class TranslateActivity extends AppCompatActivity {
     {
         questionNumber = chosenQuestions[count];
         count++;
+        if (count >= 10)
+            count = 0;
         questionText.setText(questionsList.get(questionNumber));
         answerText.setText("");
     }
