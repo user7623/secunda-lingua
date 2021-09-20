@@ -55,16 +55,6 @@ public class MainActivity extends AppCompatActivity {
                 .server(getString(R.string.back4app_server_url))
                 .build());
 
-        ParseObject firstObject = new  ParseObject("FirstClass");
-        firstObject.put("message","Hey ! First message from android. Parse is now connected");
-        firstObject.saveInBackground(e -> {
-            if (e != null){
-                Log.e("MainActivity", e.getLocalizedMessage());
-            }else{
-                Log.d("MainActivity","Object saved.");
-            }
-        });
-
         TranslateDBHelper dbHelper = new TranslateDBHelper(this);
         mDatabase = dbHelper.getWritableDatabase();
 

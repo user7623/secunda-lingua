@@ -16,6 +16,10 @@ import com.android.volley.VolleyError;
 import  com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import  com.android.volley.toolbox.Volley;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.util.List;
 
 public class DownloadMoreAction extends AppCompatActivity {
 
@@ -59,28 +63,24 @@ public class DownloadMoreAction extends AppCompatActivity {
 
 
     private void downloadMoreContent() {
-        // Instantiate the RequestQueue.
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="https://www.google.com";
 
-        // Request a string response from the provided URL.
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
-                new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                       Log.e("Response is: ", response.substring(0,500));
-                    }
-                }, new Response.ErrorListener() {
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("sentences");
+        query.orderByDescending("createdAt");
+        query.findInBackground((objects, e) -> {
 
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("ERROR 500","No response from server");
+            if (e == null) {
+                objects.get(1).getJSONArray(1);
+                for(ParseObject sentence : objects){
+
+                      Log.e("sentence", sentence.getString("sentence"));
+                }
+                for(ParseObject translation : objects){
+                    Log.e("sentence", translation.getString("translation"));
+                }
+            } else {
+               Log.e("Error", e.getMessage());
             }
         });
-
-        // Add the request to the RequestQueue.
-        queue.add(stringRequest);
     }
 
     private void addToDatabase(String newData)
