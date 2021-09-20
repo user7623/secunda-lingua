@@ -80,7 +80,6 @@ public class TranslateActivity extends AppCompatActivity {
         questionText = (TextView) findViewById(R.id.translateTextView);
         seekBar = (SeekBar) findViewById(R.id.seekBarTranslate);
 
-        //seekBar.setEnabled(false);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {

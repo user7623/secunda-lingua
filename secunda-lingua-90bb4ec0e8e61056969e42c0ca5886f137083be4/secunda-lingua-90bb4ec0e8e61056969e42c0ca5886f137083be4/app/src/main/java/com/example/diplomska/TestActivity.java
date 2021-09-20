@@ -96,7 +96,7 @@ public class TestActivity extends AppCompatActivity {
             aOne.setTextColor(Color.parseColor("#ff0000"));
         }
         if ((aTwo.getText().toString().toLowerCase().trim().equals(correctAnswers[chosenQuestions[1]].toLowerCase().trim()))
-                || (aOne.getText().toString().toLowerCase().trim().equals(altCorrectAnswers[chosenQuestions[1]].toLowerCase().trim())))
+                || (aTwo.getText().toString().toLowerCase().trim().equals(altCorrectAnswers[chosenQuestions[1]].toLowerCase().trim())))
         {
             points = points + 1;
             aTwo.setTextColor(Color.parseColor("#19FA19"));
@@ -107,7 +107,7 @@ public class TestActivity extends AppCompatActivity {
             aTwo.setTextColor(Color.parseColor("#ff0000"));
         }
         if ((aThree.getText().toString().toLowerCase().trim().equals(correctAnswers[chosenQuestions[2]].toLowerCase().trim()))
-                || (aOne.getText().toString().toLowerCase().trim().equals(altCorrectAnswers[chosenQuestions[2]].toLowerCase().trim())))
+                || (aThree.getText().toString().toLowerCase().trim().equals(altCorrectAnswers[chosenQuestions[2]].toLowerCase().trim())))
         {
             points = points + 1;
             aThree.setTextColor(Color.parseColor("#19FA19"));
@@ -118,7 +118,7 @@ public class TestActivity extends AppCompatActivity {
             aThree.setTextColor(Color.parseColor("#ff0000"));
         }
         if ((aFour.getText().toString().toLowerCase().trim().equals(correctAnswers[chosenQuestions[3]].toLowerCase().trim()))
-                || (aOne.getText().toString().toLowerCase().trim().equals(altCorrectAnswers[chosenQuestions[3]].toLowerCase().trim())))
+                || (aFour.getText().toString().toLowerCase().trim().equals(altCorrectAnswers[chosenQuestions[3]].toLowerCase().trim())))
         {
             points = points + 1;
             aFour.setTextColor(Color.parseColor("#19FA19"));
@@ -129,7 +129,7 @@ public class TestActivity extends AppCompatActivity {
             aFour.setTextColor(Color.parseColor("#ff0000"));
         }
         if ((aFive.getText().toString().toLowerCase().trim().equals(correctAnswers[chosenQuestions[4]].toLowerCase().trim()))
-                || (aOne.getText().toString().toLowerCase().trim().equals(altCorrectAnswers[chosenQuestions[4]].toLowerCase().trim())))
+                || (aFive.getText().toString().toLowerCase().trim().equals(altCorrectAnswers[chosenQuestions[4]].toLowerCase().trim())))
         {
             points = points + 1;
             aFive.setTextColor(Color.parseColor("#19FA19"));

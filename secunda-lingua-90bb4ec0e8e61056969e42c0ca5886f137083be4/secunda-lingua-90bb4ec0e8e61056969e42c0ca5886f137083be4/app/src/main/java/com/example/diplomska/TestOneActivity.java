@@ -1,6 +1,7 @@
 package com.example.diplomska;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -146,11 +148,17 @@ public class TestOneActivity extends AppCompatActivity {
                 answerFive.setTextColor(Color.parseColor("#ff0000"));
             }
         }
-        String pomString = score.getText().toString();
-        pomString = pomString + "5/";
-        pomString = pomString + Integer.toString(points);
-        score.setText(pomString);
-
+        if (points == 5) {
+            SharedPreferences preferences = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            int Score = PreferenceManager.getDefaultSharedPreferences(this).getInt("Score", 0);
+            Score = Score + 100;
+            PreferenceManager.getDefaultSharedPreferences(TestOneActivity.this).edit().putInt("Score", Score).apply();
+        }
+        String scoreString = score.getText().toString();
+        scoreString = scoreString + "5/";
+        scoreString = scoreString + Integer.toString(points);
+        score.setText(scoreString);
     }
 
     private void chooseQuestionsFunc()

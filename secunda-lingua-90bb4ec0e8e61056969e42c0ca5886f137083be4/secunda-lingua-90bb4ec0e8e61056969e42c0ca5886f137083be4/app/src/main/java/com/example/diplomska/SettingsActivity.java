@@ -103,14 +103,13 @@ public class SettingsActivity extends AppCompatActivity {
                     PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putInt("timeOfDay", hourTextViewValue).apply();
 
                     activateNotificationsFunction();
-                    // kod za deaktiviranje na notifications
                 }else {
                     notificationsAreActivated = true;
                     Toast.makeText(SettingsActivity.this, "Notifications are turned on", Toast.LENGTH_SHORT).show();
                     Calendar calendar = Calendar.getInstance();
 
                     calendar.set(Calendar.HOUR_OF_DAY, hourTextViewValue);
-                    calendar.set(Calendar.MINUTE, 15);
+                    calendar.set(Calendar.MINUTE, 21);
 
                     Intent notificationIntent = new Intent(SettingsActivity.this, BroadcastReceiver.class);
 
