@@ -29,7 +29,6 @@ public class AchievementsActivity extends AppCompatActivity {
     String mDescription[];
     int images[];
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +37,6 @@ public class AchievementsActivity extends AppCompatActivity {
         mTitle = getAchievement();
         mDescription = getAchievementDesc();
         images = getAchievementImage();
-
 
         listView = findViewById(R.id.achievementsListView);
         Button backButton = findViewById(R.id.achievementsBackButton);
@@ -52,9 +50,7 @@ public class AchievementsActivity extends AppCompatActivity {
                 startActivity(backIntent);
             }
         });
-
     }
-
     class MyAdapter extends ArrayAdapter<String> {
 
         Context context;
@@ -68,7 +64,6 @@ public class AchievementsActivity extends AppCompatActivity {
             this.rTitle = title;
             this.rDescription = description;
             this.rImgs = imgs;
-
         }
         @NonNull
         @Override

@@ -336,5 +336,9 @@ public class TranslateActivity extends AppCompatActivity {
         {
             seekBar.setProgressTintList(ColorStateList.valueOf(Color.RED));
         }
+        if (seekBarProgress <= 40)
+        {
+            seekBar.setProgressTintList(ColorStateList.valueOf(Color.GREEN));
+        }
     }
 }

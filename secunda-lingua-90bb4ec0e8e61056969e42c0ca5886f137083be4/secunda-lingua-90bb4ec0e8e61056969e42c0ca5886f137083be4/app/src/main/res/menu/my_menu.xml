@@ -18,9 +18,6 @@
             <item android:title="more exercises"
                 android:id="@+id/download_more_exercises">
             </item>
-            <item android:title="Logout"
-                android:id="@+id/logoutButton">
-            </item>
         </menu>
     </item>
 </menu>

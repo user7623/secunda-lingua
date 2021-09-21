@@ -141,5 +141,4 @@ public class SettingsActivity extends AppCompatActivity {
         Intent alarmServiceIntent = new Intent(SettingsActivity.this , AlarmService.class);
         startService(alarmServiceIntent);
     }
-
 }

@@ -9,7 +9,9 @@
 
     <Button
         android:id="@+id/basicVocabularyButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:text="Basic vocabulary"
@@ -20,8 +22,10 @@
         app:layout_constraintTop_toTopOf="parent" />
     <Button
         android:id="@+id/translateButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
         android:layout_marginTop="25dp"
         android:text="Translate the sentence"
         android:textSize="15dp"
@@ -32,9 +36,11 @@
         />
     <Button
         android:id="@+id/understandButton"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
         android:text="Understand the sentence"
         android:textSize="15dp"
         android:backgroundTint="@color/purple_200"
@@ -42,16 +48,32 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/translateButton"
         />
+    <Button
+        android:id="@+id/matchButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:text="Match the words"
+        android:textSize="15dp"
+        android:backgroundTint="@color/purple_200"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/understandButton"
+        />
 
     <TextView
         android:id="@+id/testTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
+        android:paddingBottom="20dp"
+        android:textSize="17dp"
         android:text="Test your knowledge"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/understandButton" />
+        app:layout_constraintTop_toBottomOf="@+id/matchButton" />
 
     <Button
         android:id="@+id/testOneButton"

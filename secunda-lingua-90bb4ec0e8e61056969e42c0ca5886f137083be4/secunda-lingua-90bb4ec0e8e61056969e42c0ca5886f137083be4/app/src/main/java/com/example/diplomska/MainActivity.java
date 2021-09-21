@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity {
         Button vocabularyButton = (Button) findViewById(R.id.basicVocabularyButton);
         Button translateButton = (Button) findViewById(R.id.translateButton);
         Button understandButton = (Button) findViewById(R.id.understandButton);
+        Button matchButton = (Button) findViewById(R.id.matchButton);
         Button testOneButton = (Button) findViewById(R.id.testOneButton);
         Button testTwoButton = (Button) findViewById(R.id.testTwoButton);
         Button testThreeButton = (Button) findViewById(R.id.testThreeButton);
@@ -94,6 +95,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent understandIntent = new Intent(MainActivity.this, UnderstandActivity.class);
                 startActivity(understandIntent);
+            }
+        });
+        matchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent matchIntent = new Intent(MainActivity.this, MatchActivity.class);
+                startActivity(matchIntent);
             }
         });
         testOneButton.setOnClickListener(new View.OnClickListener() {
@@ -167,8 +175,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent downloadIntent = new Intent(MainActivity.this, DownloadMoreAction.class);
                 startActivity(downloadIntent);
                return true;
-            case R.id.logoutButton:
-               return true;
+            
             default:
                 return super.onOptionsItemSelected(item);
         }

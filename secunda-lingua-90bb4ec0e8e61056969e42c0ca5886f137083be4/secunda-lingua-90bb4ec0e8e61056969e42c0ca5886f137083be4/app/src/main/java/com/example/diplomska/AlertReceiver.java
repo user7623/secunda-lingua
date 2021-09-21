@@ -12,12 +12,10 @@ public class AlertReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         Log.e("Info" , "Alert receiver --------------- --------------------------------");
-        //dokolku bil isklucen uredot resetiraj go alarmot
+        //if device was turned off reset/reactivate the alarm
         if (Intent.ACTION_BOOT_COMPLETED.equals(intent.getAction())) {
-
             Intent activateService = new Intent(context, AlarmService.class);
             context.startService(activateService);
-
         }
         if (intent.getAction().equals("reminderAction")) {
             NotificationHelper notificationHelper = new NotificationHelper(context);
