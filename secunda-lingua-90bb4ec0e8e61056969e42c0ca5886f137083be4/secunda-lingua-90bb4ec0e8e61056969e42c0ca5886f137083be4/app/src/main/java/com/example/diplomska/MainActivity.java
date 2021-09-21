@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -157,26 +158,23 @@ public class MainActivity extends AppCompatActivity {
             case R.id.settings_to_open:
                 Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
                 startActivity(settingsIntent);
-                Toast.makeText(this, "settings selected", Toast.LENGTH_SHORT).show();
-                return true;
+               return true;
             case R.id.achievements_to_open:
                 Intent achievementsIntent = new Intent(MainActivity.this, AchievementsActivity.class);
                 startActivity(achievementsIntent);
-                Toast.makeText(this, "achievements selected", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.download_more_exercises:
                 Intent downloadIntent = new Intent(MainActivity.this, DownloadMoreAction.class);
                 startActivity(downloadIntent);
-                Toast.makeText(this, "more exercises selected", Toast.LENGTH_SHORT).show();
-                return true;
+               return true;
             case R.id.logoutButton:
-                Toast.makeText(this, "Logout selected", Toast.LENGTH_SHORT).show();
-                return true;
+               return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+    @SuppressLint("Recycle")
     public static void addItem() {
         sentences = getSentencesArrayGlobal();
         translations = getTranslationsArrayGlobal();
@@ -191,46 +189,12 @@ public class MainActivity extends AppCompatActivity {
             Log.d("info: " , "now putting number" + String.valueOf(i));
             mDatabase.insert(translateExercise.TranslateEntry.TABLE_NAME, null, cv);
         }
-
-        Log.e("database: " , "initialized");
+        mDatabase.execSQL("DELETE FROM groceryList WHERE _id NOT IN (SELECT MIN(_id) FROM groceryList GROUP BY name);");
     }
 
     private static boolean doesDatabaseExist(Context context, String dbName) {
 
         File dbFile = context.getDatabasePath(dbName);
         return dbFile.exists();
-    }
-
-    public void startTimer() {
-        stopTimerTask();
-        timer = new Timer();
-        initializeTimerTask();
-        timer.schedule(timerTask, 1000, 1000);
-    }
-
-    public void initializeTimerTask() {
-        timerTask = new TimerTask() {
-            public void run() {
-                Log.i("in timer", "in timer ++++  " + (counter++));
-                // on every three seconds update results-scoretextView
-                if(counter % 3 == 0)
-                {
-                    SharedPreferences preferences = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
-                    SharedPreferences.Editor editor = preferences.edit();
-
-                    int Score = PreferenceManager.getDefaultSharedPreferences(MainActivity.this).getInt("Score", 0);
-                    String scoreString = scoreTextView.getText().toString();
-                    scoreString = scoreString + Integer.toString(Score);
-                    scoreTextView.setText(scoreString);
-                }
-            }
-        };
-    }
-
-    public void stopTimerTask() {
-        if (timer != null) {
-            timer.cancel();
-            timer = null;
-        }
     }
 }
