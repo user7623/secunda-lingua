@@ -140,17 +140,8 @@ public class MatchActivity extends AppCompatActivity {
 
                 if (numberOfLeftButtonSelected != 1)
                 {
-                    leftButtonOne.setBackgroundColor(Color.BLUE);
                     numberOfLeftButtonSelected = 1;
-                    leftButtonTwo.setClickable(false);
-                    leftButtonTwo.setBackgroundColor(Color.GRAY);
-                    leftButtonThree.setClickable(false);
-                    leftButtonThree.setBackgroundColor(Color.GRAY);
-                    leftButtonFour.setClickable(false);
-                    leftButtonFour.setBackgroundColor(Color.GRAY);
-                    leftButtonFive.setClickable(false);
-                    leftButtonFive.setBackgroundColor(Color.GRAY);
-
+                    highlightSelection(numberOfLeftButtonSelected, true);
                     checkAnswer();
                 }
                 else if (numberOfLeftButtonSelected == 1)
@@ -164,17 +155,8 @@ public class MatchActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (numberOfLeftButtonSelected != 2)
                 {
-                    leftButtonOne.setBackgroundColor(Color.GRAY);
-                    leftButtonOne.setClickable(false);
                     numberOfLeftButtonSelected = 2;
-                    leftButtonTwo.setBackgroundColor(Color.BLUE);
-                    leftButtonThree.setClickable(false);
-                    leftButtonThree.setBackgroundColor(Color.GRAY);
-                    leftButtonFour.setClickable(false);
-                    leftButtonFour.setBackgroundColor(Color.GRAY);
-                    leftButtonFive.setClickable(false);
-                    leftButtonFive.setBackgroundColor(Color.GRAY);
-
+                    highlightSelection(numberOfLeftButtonSelected, true);
                     checkAnswer();
                 }
                 else if (numberOfLeftButtonSelected == 2)
@@ -188,17 +170,8 @@ public class MatchActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (numberOfLeftButtonSelected != 3)
                 {
-                    leftButtonOne.setBackgroundColor(Color.GRAY);
-                    leftButtonOne.setClickable(false);
                     numberOfLeftButtonSelected = 3;
-                    leftButtonTwo.setClickable(false);
-                    leftButtonTwo.setBackgroundColor(Color.GRAY);
-                    leftButtonThree.setBackgroundColor(Color.BLUE);
-                    leftButtonFour.setClickable(false);
-                    leftButtonFour.setBackgroundColor(Color.GRAY);
-                    leftButtonFive.setClickable(false);
-                    leftButtonFive.setBackgroundColor(Color.GRAY);
-
+                    highlightSelection(numberOfLeftButtonSelected, true);
                     checkAnswer();
                 }
                 else if (numberOfLeftButtonSelected == 3)
@@ -212,17 +185,8 @@ public class MatchActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (numberOfLeftButtonSelected != 4)
                 {
-                    leftButtonOne.setBackgroundColor(Color.GRAY);
-                    leftButtonOne.setClickable(false);
                     numberOfLeftButtonSelected = 4;
-                    leftButtonTwo.setClickable(false);
-                    leftButtonTwo.setBackgroundColor(Color.GRAY);
-                    leftButtonThree.setClickable(false);
-                    leftButtonThree.setBackgroundColor(Color.GRAY);
-                    leftButtonFour.setBackgroundColor(Color.BLUE);
-                    leftButtonFive.setClickable(false);
-                    leftButtonFive.setBackgroundColor(Color.GRAY);
-
+                    highlightSelection(numberOfLeftButtonSelected, true);
                     checkAnswer();
                 }
                 else if (numberOfLeftButtonSelected == 4)
@@ -236,17 +200,8 @@ public class MatchActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (numberOfLeftButtonSelected != 5)
                 {
-                    leftButtonOne.setBackgroundColor(Color.GRAY);
-                    leftButtonOne.setClickable(false);
                     numberOfLeftButtonSelected = 5;
-                    leftButtonTwo.setClickable(false);
-                    leftButtonTwo.setBackgroundColor(Color.GRAY);
-                    leftButtonThree.setClickable(false);
-                    leftButtonThree.setBackgroundColor(Color.GRAY);
-                    leftButtonFour.setClickable(false);
-                    leftButtonFour.setBackgroundColor(Color.GRAY);
-                    leftButtonFive.setBackgroundColor(Color.BLUE);
-
+                    highlightSelection(numberOfLeftButtonSelected, true);
                     checkAnswer();
                 }
                 else if (numberOfLeftButtonSelected == 5)
@@ -260,17 +215,8 @@ public class MatchActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (numberOfRightButtonSelected != 1)
                 {
-                    rightButtonOne.setBackgroundColor(Color.BLUE);
                     numberOfRightButtonSelected = 1;
-                    rightButtonTwo.setClickable(false);
-                    rightButtonTwo.setBackgroundColor(Color.GRAY);
-                    rightButtonThree.setClickable(false);
-                    rightButtonThree.setBackgroundColor(Color.GRAY);
-                    rightButtonFour.setClickable(false);
-                    rightButtonFour.setBackgroundColor(Color.GRAY);
-                    rightButtonFive.setClickable(false);
-                    rightButtonFive.setBackgroundColor(Color.GRAY);
-
+                    highlightSelection(numberOfRightButtonSelected, false);
                     checkAnswer();
                 }
                 else if (numberOfLeftButtonSelected == 1)
@@ -284,17 +230,8 @@ public class MatchActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (numberOfRightButtonSelected != 2)
                 {
-                    rightButtonOne.setBackgroundColor(Color.GRAY);
-                    rightButtonOne.setClickable(false);
                     numberOfRightButtonSelected = 2;
-                    rightButtonTwo.setBackgroundColor(Color.BLUE);
-                    rightButtonThree.setClickable(false);
-                    rightButtonThree.setBackgroundColor(Color.GRAY);
-                    rightButtonFour.setClickable(false);
-                    rightButtonFour.setBackgroundColor(Color.GRAY);
-                    rightButtonFive.setClickable(false);
-                    rightButtonFive.setBackgroundColor(Color.GRAY);
-
+                    highlightSelection(numberOfRightButtonSelected, false);
                     checkAnswer();
                 }
                 else if (numberOfLeftButtonSelected == 2)
@@ -308,17 +245,8 @@ public class MatchActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (numberOfRightButtonSelected != 3)
                 {
-                    rightButtonOne.setBackgroundColor(Color.GRAY);
-                    rightButtonOne.setClickable(false);
                     numberOfRightButtonSelected = 3;
-                    rightButtonTwo.setClickable(false);
-                    rightButtonTwo.setBackgroundColor(Color.GRAY);
-                    rightButtonThree.setBackgroundColor(Color.BLUE);
-                    rightButtonFour.setClickable(false);
-                    rightButtonFour.setBackgroundColor(Color.GRAY);
-                    rightButtonFive.setClickable(false);
-                    rightButtonFive.setBackgroundColor(Color.GRAY);
-
+                    highlightSelection(numberOfRightButtonSelected, false);
                     checkAnswer();
                 }
                 else if (numberOfLeftButtonSelected == 3)
@@ -332,17 +260,8 @@ public class MatchActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (numberOfRightButtonSelected != 4)
                 {
-                    rightButtonOne.setBackgroundColor(Color.GRAY);
-                    rightButtonOne.setClickable(false);
                     numberOfRightButtonSelected = 4;
-                    rightButtonTwo.setClickable(false);
-                    rightButtonTwo.setBackgroundColor(Color.GRAY);
-                    rightButtonThree.setBackgroundColor(Color.GRAY);
-                    rightButtonThree.setClickable(false);
-                    rightButtonFour.setBackgroundColor(Color.BLUE);
-                    rightButtonFive.setClickable(false);
-                    rightButtonFive.setBackgroundColor(Color.GRAY);
-
+                    highlightSelection(numberOfRightButtonSelected, false);
                     checkAnswer();
                 }
                 else if (numberOfLeftButtonSelected == 4)
@@ -356,17 +275,8 @@ public class MatchActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (numberOfRightButtonSelected != 5)
                 {
-                    rightButtonOne.setBackgroundColor(Color.GRAY);
-                    rightButtonOne.setClickable(false);
                     numberOfRightButtonSelected = 5;
-                    rightButtonTwo.setClickable(false);
-                    rightButtonTwo.setBackgroundColor(Color.GRAY);
-                    rightButtonThree.setBackgroundColor(Color.GRAY);
-                    rightButtonThree.setClickable(false);
-                    rightButtonFour.setBackgroundColor(Color.GRAY);
-                    rightButtonFour.setClickable(false);
-                    rightButtonFive.setBackgroundColor(Color.BLUE);
-
+                    highlightSelection(numberOfRightButtonSelected, false);
                     checkAnswer();
                 }
                 else if (numberOfLeftButtonSelected == 5)
@@ -375,6 +285,83 @@ public class MatchActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public void highlightSelection(int numberOfSelectedButton, boolean isOnLeft) {
+        if (!isOnLeft) {
+            rightButtonOne.setBackgroundColor(Color.GRAY);
+            rightButtonOne.setClickable(false);
+            rightButtonTwo.setClickable(false);
+            rightButtonTwo.setBackgroundColor(Color.GRAY);
+            rightButtonThree.setBackgroundColor(Color.GRAY);
+            rightButtonThree.setClickable(false);
+            rightButtonFour.setBackgroundColor(Color.GRAY);
+            rightButtonFour.setClickable(false);
+            rightButtonFive.setClickable(false);
+            rightButtonFive.setBackgroundColor(Color.GRAY);
+
+            switch (numberOfSelectedButton) {
+                case 1:
+                    rightButtonOne.setClickable(true);
+                    rightButtonOne.setBackgroundColor(Color.BLUE);
+                    break;
+                case 2:
+                    rightButtonTwo.setClickable(true);
+                    rightButtonTwo.setBackgroundColor(Color.BLUE);
+                    break;
+                case 3:
+                    rightButtonThree.setClickable(true);
+                    rightButtonThree.setBackgroundColor(Color.BLUE);
+                    break;
+                case 4:
+                    rightButtonFour.setClickable(true);
+                    rightButtonFour.setBackgroundColor(Color.BLUE);
+                    break;
+                case 5:
+                    rightButtonFive.setClickable(true);
+                    rightButtonFive.setBackgroundColor(Color.BLUE);
+                default:
+                    break;
+            }
+        } else {
+            leftButtonOne.setBackgroundColor(Color.GRAY);
+            leftButtonOne.setClickable(false);
+            leftButtonTwo.setClickable(false);
+            leftButtonTwo.setBackgroundColor(Color.GRAY);
+            leftButtonThree.setBackgroundColor(Color.GRAY);
+            leftButtonThree.setClickable(false);
+            leftButtonFour.setBackgroundColor(Color.GRAY);
+            leftButtonFour.setClickable(false);
+            leftButtonFive.setClickable(false);
+            leftButtonFive.setBackgroundColor(Color.GRAY);
+
+            switch (numberOfSelectedButton) {
+                case 1:
+                    leftButtonOne.setClickable(true);
+                    leftButtonOne.setBackgroundColor(Color.BLUE);
+                    break;
+                case 2:
+                    leftButtonTwo.setClickable(true);
+                    leftButtonTwo.setBackgroundColor(Color.BLUE);
+                    break;
+                case 3:
+                    leftButtonThree.setClickable(true);
+                    leftButtonThree.setBackgroundColor(Color.BLUE);
+                    break;
+                case 4:
+                    leftButtonFour.setClickable(true);
+                    leftButtonFour.setBackgroundColor(Color.BLUE);
+                    break;
+                case 5:
+                    leftButtonFive.setClickable(true);
+                    leftButtonFive.setBackgroundColor(Color.BLUE);
+                    break;
+                default:
+                    break;
+            }
+
+        }
+
     }
 
     private void checkAnswer() {
