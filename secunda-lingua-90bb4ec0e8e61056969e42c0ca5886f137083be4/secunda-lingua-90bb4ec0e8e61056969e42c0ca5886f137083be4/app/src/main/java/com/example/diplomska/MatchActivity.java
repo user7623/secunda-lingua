@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.SeekBar;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Random;
 
 public class MatchActivity extends AppCompatActivity {
@@ -48,6 +50,14 @@ public class MatchActivity extends AppCompatActivity {
     SeekBar seekBar;
     int seekBarProgress = 0;
 
+    QuestionAnswerClass QACone = new QuestionAnswerClass();
+    QuestionAnswerClass QACtwo = new QuestionAnswerClass();
+    QuestionAnswerClass QACthree = new QuestionAnswerClass();
+    QuestionAnswerClass QACfour = new QuestionAnswerClass();
+    QuestionAnswerClass QACfive = new QuestionAnswerClass();
+
+    HashMap<Integer, Integer> improvisedPointers = new HashMap<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,9 +82,13 @@ public class MatchActivity extends AppCompatActivity {
         setUpSeekBar();
 
         makeOnClickListenersForButtons();
+
         TranslateDBHelper dbHelper = new TranslateDBHelper(this);
         mDatabase = dbHelper.getWritableDatabase();
+
         readFromDB();
+        setUpQAClasses();
+        shuffleAnswers();
         setButtonsText();
     }
 
@@ -365,6 +379,48 @@ public class MatchActivity extends AppCompatActivity {
     }
 
     private void checkAnswer() {
+
+        if (numberOfLeftButtonSelected != 0 && numberOfRightButtonSelected != 0)
+        {
+            String rQuestion = "";
+            String rAnswer = "";
+            //get selected word(question) and its translation(answer)
+            switch (numberOfLeftButtonSelected){
+                case 1: rQuestion = leftButtonOne.getText().toString(); break;
+                case 2: rQuestion = leftButtonTwo.getText().toString(); break;
+                case 3: rQuestion = leftButtonThree.getText().toString(); break;
+                case 4: rQuestion = leftButtonFour.getText().toString(); break;
+                case 5: rQuestion = leftButtonFive.getText().toString(); break;
+                default: break;
+            }
+            switch (numberOfRightButtonSelected){
+                case 1: rAnswer = rightButtonOne.getText().toString(); break;
+                case 2: rAnswer = rightButtonTwo.getText().toString(); break;
+                case 3: rAnswer = rightButtonThree.getText().toString(); break;
+                case 4: rAnswer = rightButtonFour.getText().toString(); break;
+                case 5: rAnswer = rightButtonFive.getText().toString(); break;
+                default: break;
+            }
+            //check against all pairs&if true save as answered correct
+            if(QACone.checkIfValid(rQuestion, rAnswer)){
+                addButtonsToAnswered(numberOfLeftButtonSelected, numberOfRightButtonSelected);
+            }
+            if(QACtwo.checkIfValid(rQuestion, rAnswer)){
+                addButtonsToAnswered(numberOfLeftButtonSelected, numberOfRightButtonSelected);
+            }
+            if(QACthree.checkIfValid(rQuestion, rAnswer)){
+                addButtonsToAnswered(numberOfLeftButtonSelected, numberOfRightButtonSelected);
+            }
+            if(QACfour.checkIfValid(rQuestion, rAnswer)){
+                addButtonsToAnswered(numberOfLeftButtonSelected, numberOfRightButtonSelected);
+            }
+            if(QACfive.checkIfValid(rQuestion, rAnswer)){
+                addButtonsToAnswered(numberOfLeftButtonSelected, numberOfRightButtonSelected);
+            }
+            resetColoursLeft();
+            resetColoursRight();
+        }
+        /*
         //if answer is correct
         if (numberOfLeftButtonSelected == numberOfRightButtonSelected)
         {
@@ -373,10 +429,11 @@ public class MatchActivity extends AppCompatActivity {
         else if (numberOfLeftButtonSelected != 0 && numberOfRightButtonSelected != 0){
             resetColoursLeft();
             resetColoursRight();
-        }
+        }*/
     }
     public void resetColoursLeft()
     {
+        Log.e("answered left", answeredLeft + "!");
         if (!answeredLeft.contains(1))
         {
             leftButtonOne.setBackgroundColor(Color.GREEN);
@@ -406,6 +463,7 @@ public class MatchActivity extends AppCompatActivity {
     }
     public void resetColoursRight()
     {
+        Log.e("answered left", answeredLeft + "!");
         if (!answeredRight.contains(1))
         {
             rightButtonOne.setBackgroundColor(Color.GREEN);
@@ -502,5 +560,50 @@ public class MatchActivity extends AppCompatActivity {
 
         Intent endTranslateActivity = new Intent(MatchActivity.this, MainActivity.class);
         startActivity(endTranslateActivity);
+    }
+
+    public class QuestionAnswerClass{
+
+        String question;
+        String answer;
+
+        public boolean checkIfValid(String rQuestion, String rAnswer) {
+            return question.trim().toLowerCase().equals(rQuestion.trim().toLowerCase())
+                    && answer.trim().toLowerCase().equals(rAnswer.trim().toLowerCase());
+        }
+
+        public String getQuestion() {
+            return question;
+        }
+
+        public void setQuestion(String question) {
+            this.question = question;
+        }
+
+        public String getAnswer() {
+            return answer;
+        }
+
+        public void setAnswer(String answer) {
+            this.answer = answer;
+        }
+    }
+
+    public void setUpQAClasses() {
+        QACone.setQuestion(questionsList.get(0));
+        QACtwo.setQuestion(questionsList.get(1));
+        QACthree.setQuestion(questionsList.get(2));
+        QACfour.setQuestion(questionsList.get(3));
+        QACfive.setQuestion(questionsList.get(4));
+
+        QACone.setAnswer(translationsList.get(0));
+        QACtwo.setAnswer(translationsList.get(1));
+        QACthree.setAnswer(translationsList.get(2));
+        QACfour.setAnswer(translationsList.get(3));
+        QACfive.setAnswer(translationsList.get(4));
+    }
+
+    public void shuffleAnswers() {
+        Collections.shuffle(translationsList);
     }
 }
