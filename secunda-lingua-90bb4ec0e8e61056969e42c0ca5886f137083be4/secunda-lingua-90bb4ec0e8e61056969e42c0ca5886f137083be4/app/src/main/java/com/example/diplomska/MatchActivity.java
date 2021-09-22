@@ -1,8 +1,11 @@
 package com.example.diplomska;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -10,6 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SeekBar;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -38,6 +42,12 @@ public class MatchActivity extends AppCompatActivity {
 
     private SQLiteDatabase mDatabase;
 
+    ArrayList<Integer> answeredLeft = new ArrayList<>();
+    ArrayList<Integer> answeredRight= new ArrayList<>();
+
+    SeekBar seekBar;
+    int seekBarProgress = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +66,10 @@ public class MatchActivity extends AppCompatActivity {
         rightButtonThree = (Button) findViewById(R.id.matchButtonThreeRight);
         rightButtonFour = (Button) findViewById(R.id.matchButtonFourRight);
         rightButtonFive = (Button) findViewById(R.id.matchButtonFiveRight);
+
+        seekBar = (SeekBar) findViewById(R.id.seekBarMatch);
+
+        setUpSeekBar();
 
         makeOnClickListenersForButtons();
         TranslateDBHelper dbHelper = new TranslateDBHelper(this);
@@ -141,16 +155,7 @@ public class MatchActivity extends AppCompatActivity {
                 }
                 else if (numberOfLeftButtonSelected == 1)
                 {
-                    leftButtonOne.setBackgroundColor(Color.GREEN);
-                    numberOfLeftButtonSelected = 0;
-                    leftButtonTwo.setClickable(true);
-                    leftButtonTwo.setBackgroundColor(Color.GREEN);
-                    leftButtonThree.setClickable(true);
-                    leftButtonThree.setBackgroundColor(Color.GREEN);
-                    leftButtonFour.setClickable(true);
-                    leftButtonFour.setBackgroundColor(Color.GREEN);
-                    leftButtonFive.setClickable(true);
-                    leftButtonFive.setBackgroundColor(Color.GREEN);
+                    resetColoursLeft();
                 }
             }
         });
@@ -174,16 +179,7 @@ public class MatchActivity extends AppCompatActivity {
                 }
                 else if (numberOfLeftButtonSelected == 2)
                 {
-                    leftButtonOne.setBackgroundColor(Color.GREEN);
-                    leftButtonOne.setClickable(true);
-                    numberOfLeftButtonSelected = 0;
-                    leftButtonTwo.setBackgroundColor(Color.GREEN);
-                    leftButtonThree.setClickable(true);
-                    leftButtonThree.setBackgroundColor(Color.GREEN);
-                    leftButtonFour.setClickable(true);
-                    leftButtonFour.setBackgroundColor(Color.GREEN);
-                    leftButtonFive.setClickable(true);
-                    leftButtonFive.setBackgroundColor(Color.GREEN);
+                    resetColoursLeft();
                 }
             }
         });
@@ -207,16 +203,7 @@ public class MatchActivity extends AppCompatActivity {
                 }
                 else if (numberOfLeftButtonSelected == 3)
                 {
-                    leftButtonOne.setBackgroundColor(Color.GREEN);
-                    leftButtonOne.setClickable(true);
-                    numberOfLeftButtonSelected = 0;
-                    leftButtonTwo.setClickable(true);
-                    leftButtonTwo.setBackgroundColor(Color.GREEN);
-                    leftButtonThree.setBackgroundColor(Color.GREEN);
-                    leftButtonFour.setClickable(true);
-                    leftButtonFour.setBackgroundColor(Color.GREEN);
-                    leftButtonFive.setClickable(true);
-                    leftButtonFive.setBackgroundColor(Color.GREEN);
+                    resetColoursLeft();
                 }
             }
         });
@@ -240,16 +227,7 @@ public class MatchActivity extends AppCompatActivity {
                 }
                 else if (numberOfLeftButtonSelected == 4)
                 {
-                    leftButtonOne.setBackgroundColor(Color.GREEN);
-                    leftButtonOne.setClickable(true);
-                    numberOfLeftButtonSelected = 0;
-                    leftButtonTwo.setClickable(true);
-                    leftButtonTwo.setBackgroundColor(Color.GREEN);
-                    leftButtonThree.setClickable(true);
-                    leftButtonThree.setBackgroundColor(Color.GREEN);
-                    leftButtonFour.setBackgroundColor(Color.GREEN);
-                    leftButtonFive.setClickable(true);
-                    leftButtonFive.setBackgroundColor(Color.GREEN);
+                    resetColoursLeft();
                 }
             }
         });
@@ -273,16 +251,7 @@ public class MatchActivity extends AppCompatActivity {
                 }
                 else if (numberOfLeftButtonSelected == 5)
                 {
-                    leftButtonOne.setBackgroundColor(Color.GREEN);
-                    leftButtonOne.setClickable(true);
-                    numberOfLeftButtonSelected = 0;
-                    leftButtonTwo.setClickable(true);
-                    leftButtonTwo.setBackgroundColor(Color.GREEN);
-                    leftButtonThree.setClickable(true);
-                    leftButtonThree.setBackgroundColor(Color.GREEN);
-                    leftButtonFour.setClickable(true);
-                    leftButtonFour.setBackgroundColor(Color.GREEN);
-                    leftButtonFive.setBackgroundColor(Color.GREEN);
+                    resetColoursLeft();
                 }
             }
         });
@@ -304,18 +273,9 @@ public class MatchActivity extends AppCompatActivity {
 
                     checkAnswer();
                 }
-                else if (numberOfRightButtonSelected == 1)
+                else if (numberOfLeftButtonSelected == 1)
                 {
-                    rightButtonOne.setBackgroundColor(Color.GREEN);
-                    numberOfRightButtonSelected = 0;
-                    rightButtonTwo.setClickable(true);
-                    rightButtonTwo.setBackgroundColor(Color.GREEN);
-                    rightButtonThree.setClickable(true);
-                    rightButtonThree.setBackgroundColor(Color.GREEN);
-                    rightButtonFour.setClickable(true);
-                    rightButtonFour.setBackgroundColor(Color.GREEN);
-                    rightButtonFive.setClickable(true);
-                    rightButtonFive.setBackgroundColor(Color.GREEN);
+                    resetColoursRight();
                 }
             }
         });
@@ -337,18 +297,9 @@ public class MatchActivity extends AppCompatActivity {
 
                     checkAnswer();
                 }
-                else if (numberOfRightButtonSelected == 2)
+                else if (numberOfLeftButtonSelected == 2)
                 {
-                    rightButtonOne.setBackgroundColor(Color.GREEN);
-                    rightButtonOne.setClickable(true);
-                    numberOfRightButtonSelected = 0;
-                    rightButtonTwo.setBackgroundColor(Color.GREEN);
-                    rightButtonThree.setClickable(true);
-                    rightButtonThree.setBackgroundColor(Color.GREEN);
-                    rightButtonFour.setClickable(true);
-                    rightButtonFour.setBackgroundColor(Color.GREEN);
-                    rightButtonFive.setClickable(true);
-                    rightButtonFive.setBackgroundColor(Color.GREEN);
+                    resetColoursRight();
                 }
             }
         });
@@ -370,18 +321,9 @@ public class MatchActivity extends AppCompatActivity {
 
                     checkAnswer();
                 }
-                else if (numberOfRightButtonSelected == 3)
+                else if (numberOfLeftButtonSelected == 3)
                 {
-                    rightButtonOne.setBackgroundColor(Color.GREEN);
-                    rightButtonOne.setClickable(true);
-                    numberOfRightButtonSelected = 0;
-                    rightButtonTwo.setBackgroundColor(Color.GREEN);
-                    rightButtonTwo.setClickable(true);
-                    rightButtonThree.setBackgroundColor(Color.GREEN);
-                    rightButtonFour.setClickable(true);
-                    rightButtonFour.setBackgroundColor(Color.GREEN);
-                    rightButtonFive.setClickable(true);
-                    rightButtonFive.setBackgroundColor(Color.GREEN);
+                    resetColoursRight();
                 }
             }
         });
@@ -403,18 +345,9 @@ public class MatchActivity extends AppCompatActivity {
 
                     checkAnswer();
                 }
-                else if (numberOfRightButtonSelected == 4)
+                else if (numberOfLeftButtonSelected == 4)
                 {
-                    rightButtonOne.setBackgroundColor(Color.GREEN);
-                    rightButtonOne.setClickable(true);
-                    numberOfRightButtonSelected = 0;
-                    rightButtonTwo.setBackgroundColor(Color.GREEN);
-                    rightButtonTwo.setClickable(true);
-                    rightButtonThree.setBackgroundColor(Color.GREEN);
-                    rightButtonThree.setClickable(true);
-                    rightButtonFour.setBackgroundColor(Color.GREEN);
-                    rightButtonFive.setClickable(true);
-                    rightButtonFive.setBackgroundColor(Color.GREEN);
+                    resetColoursRight();
                 }
             }
         });
@@ -436,18 +369,9 @@ public class MatchActivity extends AppCompatActivity {
 
                     checkAnswer();
                 }
-                else if (numberOfRightButtonSelected == 5)
+                else if (numberOfLeftButtonSelected == 5)
                 {
-                    rightButtonOne.setBackgroundColor(Color.GREEN);
-                    rightButtonOne.setClickable(true);
-                    numberOfRightButtonSelected = 0;
-                    rightButtonTwo.setBackgroundColor(Color.GREEN);
-                    rightButtonTwo.setClickable(true);
-                    rightButtonThree.setBackgroundColor(Color.GREEN);
-                    rightButtonThree.setClickable(true);
-                    rightButtonFour.setBackgroundColor(Color.GREEN);
-                    rightButtonFour.setClickable(true);
-                    rightButtonFive.setBackgroundColor(Color.GREEN);
+                    resetColoursRight();
                 }
             }
         });
@@ -457,42 +381,139 @@ public class MatchActivity extends AppCompatActivity {
         //if answer is correct
         if (numberOfLeftButtonSelected == numberOfRightButtonSelected)
         {
-            addButtonsToAnswered();
-            resetColours();
+            addButtonsToAnswered(numberOfRightButtonSelected, numberOfLeftButtonSelected);
         }//if answer is incorrect
-        else{
-            resetColours();
+        else if (numberOfLeftButtonSelected != 0 && numberOfRightButtonSelected != 0){
+            resetColoursLeft();
+            resetColoursRight();
         }
     }
-    public void resetColours()
+    public void resetColoursLeft()
     {
-        rightButtonOne.setBackgroundColor(Color.GREEN);
-        rightButtonOne.setClickable(true);
-        numberOfRightButtonSelected = 0;
-        rightButtonTwo.setBackgroundColor(Color.GREEN);
-        rightButtonTwo.setClickable(true);
-        rightButtonThree.setBackgroundColor(Color.GREEN);
-        rightButtonThree.setClickable(true);
-        rightButtonFour.setBackgroundColor(Color.GREEN);
-        rightButtonFour.setClickable(true);
-        rightButtonFive.setBackgroundColor(Color.GREEN);
-        rightButtonFive.setClickable(true);
-
-        leftButtonOne.setBackgroundColor(Color.GREEN);
-        leftButtonOne.setClickable(true);
+        if (!answeredLeft.contains(1))
+        {
+            leftButtonOne.setBackgroundColor(Color.GREEN);
+            leftButtonOne.setClickable(true);
+        }
+        if (!answeredLeft.contains(2))
+        {
+            leftButtonTwo.setClickable(true);
+            leftButtonTwo.setBackgroundColor(Color.GREEN);
+        }
+        if (!answeredLeft.contains(3))
+        {
+            leftButtonThree.setClickable(true);
+            leftButtonThree.setBackgroundColor(Color.GREEN);
+        }
+        if (!answeredLeft.contains(4))
+        {
+            leftButtonFour.setClickable(true);
+            leftButtonFour.setBackgroundColor(Color.GREEN);
+        }
+        if (!answeredLeft.contains(5))
+        {
+            leftButtonFive.setClickable(true);
+            leftButtonFive.setBackgroundColor(Color.GREEN);
+        }
         numberOfLeftButtonSelected = 0;
-        leftButtonTwo.setClickable(true);
-        leftButtonTwo.setBackgroundColor(Color.GREEN);
-        leftButtonThree.setClickable(true);
-        leftButtonThree.setBackgroundColor(Color.GREEN);
-        leftButtonFour.setClickable(true);
-        leftButtonFour.setBackgroundColor(Color.GREEN);
-        leftButtonFive.setBackgroundColor(Color.GREEN);
-        leftButtonFive.setClickable(true);
+    }
+    public void resetColoursRight()
+    {
+        if (!answeredRight.contains(1))
+        {
+            rightButtonOne.setBackgroundColor(Color.GREEN);
+            rightButtonOne.setClickable(true);
+        }
+        if (!answeredRight.contains(2))
+        {
+            rightButtonTwo.setClickable(true);
+            rightButtonTwo.setBackgroundColor(Color.GREEN);
+        }
+        if (!answeredRight.contains(3))
+        {
+            rightButtonThree.setClickable(true);
+            rightButtonThree.setBackgroundColor(Color.GREEN);
+        }
+        if (!answeredRight.contains(4))
+        {
+            rightButtonFour.setClickable(true);
+            rightButtonFour.setBackgroundColor(Color.GREEN);
+        }
+        if (!answeredRight.contains(5))
+        {
+            rightButtonFive.setClickable(true);
+            rightButtonFive.setBackgroundColor(Color.GREEN);
+        }
+        numberOfRightButtonSelected = 0;
     }
 
-    public void addButtonsToAnswered()
+    public void addButtonsToAnswered(int left, int right)
     {
+        Log.e("Buttons", "have been added to answered-----------");
+        answeredLeft.add(left);
+        answeredRight.add(right);
+        resetColoursLeft();
+        resetColoursRight();
 
+        seekBarProgress = seekBarProgress + 20;
+        setSeekBarColor();
+
+        if (seekBarProgress >= 100)
+        {
+            endCourseFunc();
+        }
+    }
+
+    public void setUpSeekBar()
+    {
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                seekBar.setProgress(seekBarProgress);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+    }
+    private void setSeekBarColor()
+    {
+        Log.e("SEEKBAR", "setingh up colour" + seekBarProgress);
+        seekBar.setProgress(seekBarProgress);
+        if (seekBarProgress > 40 && seekBarProgress < 80)
+        {
+            seekBar.setProgressTintList(ColorStateList.valueOf(Color.YELLOW));
+        }
+        if (seekBarProgress >= 80)
+        {
+            seekBar.setProgressTintList(ColorStateList.valueOf(Color.RED));
+        }
+        if (seekBarProgress <= 40)
+        {
+            seekBar.setProgressTintList(ColorStateList.valueOf(Color.GREEN));
+        }
+    }
+
+    private void endCourseFunc()
+    {
+        if (seekBarProgress >= 100) {
+            SharedPreferences preferences = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+
+            int Score = PreferenceManager.getDefaultSharedPreferences(this).getInt("Score", 0);
+
+            Score = Score + seekBarProgress;
+            PreferenceManager.getDefaultSharedPreferences(MatchActivity.this).edit().putInt("Score", Score).apply();
+        }
+
+        Intent endTranslateActivity = new Intent(MatchActivity.this, MainActivity.class);
+        startActivity(endTranslateActivity);
     }
 }
