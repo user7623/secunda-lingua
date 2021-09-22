@@ -373,9 +373,7 @@ public class MatchActivity extends AppCompatActivity {
                 default:
                     break;
             }
-
         }
-
     }
 
     private void checkAnswer() {
@@ -420,16 +418,6 @@ public class MatchActivity extends AppCompatActivity {
             resetColoursLeft();
             resetColoursRight();
         }
-        /*
-        //if answer is correct
-        if (numberOfLeftButtonSelected == numberOfRightButtonSelected)
-        {
-            addButtonsToAnswered(numberOfRightButtonSelected, numberOfLeftButtonSelected);
-        }//if answer is incorrect
-        else if (numberOfLeftButtonSelected != 0 && numberOfRightButtonSelected != 0){
-            resetColoursLeft();
-            resetColoursRight();
-        }*/
     }
     public void resetColoursLeft()
     {
@@ -516,10 +504,8 @@ public class MatchActivity extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 seekBar.setProgress(seekBarProgress);
             }
-
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
             }
 
             @Override
@@ -572,16 +558,8 @@ public class MatchActivity extends AppCompatActivity {
                     && answer.trim().toLowerCase().equals(rAnswer.trim().toLowerCase());
         }
 
-        public String getQuestion() {
-            return question;
-        }
-
         public void setQuestion(String question) {
             this.question = question;
-        }
-
-        public String getAnswer() {
-            return answer;
         }
 
         public void setAnswer(String answer) {

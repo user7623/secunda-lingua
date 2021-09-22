@@ -38,7 +38,7 @@
         android:gravity="center"
         android:text="Click on the icon below and listen, then write what you heard"
         android:textSize="20sp"
-        android:textColor="#19FA19"
+        android:textColor="@color/purple_200"
         android:padding="15dp"
         />
 
@@ -61,7 +61,7 @@
         android:paddingEnd="20dp"
         android:paddingStart="20dp"
         android:hint="write what you heard here"
-        android:textColor="#19FA19"
+        android:textColor="@color/purple_200"
         />
     <Button
         android:layout_width="wrap_content"
@@ -72,7 +72,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:textColor="@android:color/white"
         android:text="Submit"
-        android:backgroundTint="#19FA19"
+        android:backgroundTint="@color/purple_200"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
