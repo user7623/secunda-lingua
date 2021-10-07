@@ -100,8 +100,7 @@ public class UnderstandActivity extends AppCompatActivity {
 
                     new CountDownTimer(2000, 1000) {
                         public void onFinish() {
-                            Log.e("next question:", ".............................................");
-                            int id = getResources().getIdentifier("drawable/play_sound_icon", "id", "com.example.diplomska");
+                           int id = getResources().getIdentifier("drawable/play_sound_icon", "id", "com.example.diplomska");
                             imageView.setImageResource(id);
                         }
 
@@ -189,23 +188,26 @@ public class UnderstandActivity extends AppCompatActivity {
 
         sound1 = soundPool.load(this, R.raw.sound1, 1);
 
-        for (int i = 0; i <= 8; i++){
-            chosenQuestions[i] = i;
-        }
-        Random rand = new Random();
-        for (int i = 0; i < chosenQuestions.length; i++) {
-            int randomIndexToSwap = rand.nextInt(chosenQuestions.length);
-            int temp = chosenQuestions[randomIndexToSwap];
-            chosenQuestions[randomIndexToSwap] = chosenQuestions[i];
-            chosenQuestions[i] = temp;
-        }
-        Log.e("chosen questions" , "are:::" + chosenQuestions);
-        questionNumber = rand.nextInt(chosenQuestions.length);
+
 
         if (savedInstanceState != null)
         {
             restoreUIState(savedInstanceState);
         } else {
+
+            for (int i = 0; i <= 8; i++){
+                chosenQuestions[i] = i;
+            }
+
+            Random rand = new Random();
+
+            for (int i = 0; i < chosenQuestions.length; i++) {
+                int randomIndexToSwap = rand.nextInt(chosenQuestions.length);
+                int temp = chosenQuestions[randomIndexToSwap];
+                chosenQuestions[randomIndexToSwap] = chosenQuestions[i];
+                chosenQuestions[i] = temp;
+            }
+            questionNumber = rand.nextInt(chosenQuestions.length);
             giveQuestionFunc();
         }
 
@@ -215,6 +217,8 @@ public class UnderstandActivity extends AppCompatActivity {
             answer.setText(savedInstanceState.getString("answerFieldText"));
             stringForPronouncing = savedInstanceState.getString("stringForPronouncing");
             seekBarProgress = savedInstanceState.getInt("seekBarProgress");
+            chosenQuestions = savedInstanceState.getIntArray("chosenQuestions");
+            questionNumber = savedInstanceState.getInt("questionNumber");
         }
 
         public void checkAnswerFunction () {
@@ -375,6 +379,8 @@ public class UnderstandActivity extends AppCompatActivity {
         outState.putString("stringForPronouncing", stringForPronouncing);
         outState.putString("answerFieldText", answer.getText().toString());
         outState.putInt("seekBarProgress", seekBarProgress);
+        outState.putIntArray("chosenQuestions", chosenQuestions);
+        outState.putInt("questionNumber", questionNumber);
     }
 }
 
