@@ -1,5 +1,6 @@
 package com.example.diplomska;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
@@ -80,7 +81,6 @@ public class MatchActivity extends AppCompatActivity {
         seekBar = (SeekBar) findViewById(R.id.seekBarMatch);
 
         setUpSeekBar();
-
         makeOnClickListenersForButtons();
 
         TranslateDBHelper dbHelper = new TranslateDBHelper(this);
@@ -578,4 +578,5 @@ public class MatchActivity extends AppCompatActivity {
     public void shuffleAnswers() {
         Collections.shuffle(translationsList);
     }
+
 }

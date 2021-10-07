@@ -14,7 +14,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Diplomska">
-        <activity android:name=".MatchActivity"></activity>
+        <activity android:name=".MatchActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            />
 
         <meta-data
             android:name="com.parse.SERVER_URL"
@@ -29,8 +31,11 @@
         <service android:name=".AlarmService" />
 
         <activity android:name=".TranslateActivity" />
-        <activity android:name=".TestOneActivity" />
-        <activity android:name=".TestActivity" />
+        <activity android:name=".TestOneActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            />
+        <activity android:name=".TestActivity"
+            />
         <activity android:name=".AchievementsActivity" />
         <activity android:name=".DownloadMoreAction" />
         <activity android:name=".SettingsActivity" />
