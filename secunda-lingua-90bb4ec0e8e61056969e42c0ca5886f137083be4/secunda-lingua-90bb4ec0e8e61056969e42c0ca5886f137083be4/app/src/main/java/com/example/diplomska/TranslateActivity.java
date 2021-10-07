@@ -1,5 +1,6 @@
 package com.example.diplomska;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
@@ -145,6 +146,10 @@ public class TranslateActivity extends AppCompatActivity {
         }
         questionNumber = rand.nextInt(chosenQuestions.length);
         giveQuestionFunc();
+        if (savedInstanceState != null)
+        {
+            seekBarProgress = savedInstanceState.getInt("seekBarProgress");
+        }
     }
     public void checkAnswerFunction()
     {
@@ -340,5 +345,12 @@ public class TranslateActivity extends AppCompatActivity {
         {
             seekBar.setProgressTintList(ColorStateList.valueOf(Color.GREEN));
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putInt("seekBarProgress", seekBarProgress);
     }
 }

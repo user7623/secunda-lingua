@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
 
@@ -48,6 +49,7 @@ public class UnderstandActivity extends AppCompatActivity {
     int[] chosenQuestions = new int[9];
     int counter = 0;
     ArrayList<String> questionsList = new ArrayList<>();
+    boolean savedInstanceStateHelper = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +64,11 @@ public class UnderstandActivity extends AppCompatActivity {
         answer = (EditText) findViewById(R.id.understandAnswer);
         submitAnswer = (Button) findViewById(R.id.understandSubmitButton);
         quitButton = (Button) findViewById(R.id.quitButtonOnUnderstand);
+
+        if (savedInstanceState != null)
+        {
+            savedInstanceStateHelper = true;
+        }
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -151,14 +158,16 @@ public class UnderstandActivity extends AppCompatActivity {
 
             @Override
             public void onInit(int status) {
-                // TODO Auto-generated method stub
                 if (status == TextToSpeech.SUCCESS) {
                     int result = tts.setLanguage(Locale.UK);
                     if (result == TextToSpeech.LANG_MISSING_DATA ||
                             result == TextToSpeech.LANG_NOT_SUPPORTED) {
                         Log.e("error", "This Language is not supported");
                     } else {
-                        ConvertTextToSpeech();
+                        if (!savedInstanceStateHelper)
+                        {
+                            ConvertTextToSpeech();
+                        }
                     }
                 } else
                     Log.e("error", "Initialization of TextToSpeech Failed!");
@@ -193,9 +202,21 @@ public class UnderstandActivity extends AppCompatActivity {
         Log.e("chosen questions" , "are:::" + chosenQuestions);
         questionNumber = rand.nextInt(chosenQuestions.length);
 
-        giveQuestionFunc();
+        if (savedInstanceState != null)
+        {
+            restoreUIState(savedInstanceState);
+        } else {
+            giveQuestionFunc();
+        }
 
         }
+
+        public void restoreUIState (Bundle savedInstanceState) {
+            answer.setText(savedInstanceState.getString("answerFieldText"));
+            stringForPronouncing = savedInstanceState.getString("stringForPronouncing");
+            seekBarProgress = savedInstanceState.getInt("seekBarProgress");
+        }
+
         public void checkAnswerFunction () {
 
             String answered = answer.getText().toString();
@@ -345,6 +366,15 @@ public class UnderstandActivity extends AppCompatActivity {
         {
             seekBar.setProgressTintList(ColorStateList.valueOf(Color.RED));
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString("stringForPronouncing", stringForPronouncing);
+        outState.putString("answerFieldText", answer.getText().toString());
+        outState.putInt("seekBarProgress", seekBarProgress);
     }
 }
 
