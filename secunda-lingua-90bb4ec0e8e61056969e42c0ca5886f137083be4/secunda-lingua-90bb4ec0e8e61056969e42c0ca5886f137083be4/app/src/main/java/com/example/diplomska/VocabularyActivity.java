@@ -23,6 +23,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
@@ -52,6 +53,9 @@ public class VocabularyActivity extends AppCompatActivity {
     String stringForPronouncing;
     ImageView listenAgainButton;
     ArrayList<Integer> chosenPictures;
+    boolean savedInstanceStateHelper = false;
+    int imageId;
+    String currentAnswerText;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +68,10 @@ public class VocabularyActivity extends AppCompatActivity {
         imagesList = getImagesIdsGlobal();
         seekBar = (SeekBar) findViewById(R.id.seekBarVocabulary);
         listenAgainButton = (ImageView) findViewById(R.id.listenAgainButtonVocabulary);
+        if (savedInstanceState != null)
+        {
+            savedInstanceStateHelper = true;
+        }
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -124,7 +132,10 @@ public class VocabularyActivity extends AppCompatActivity {
                             result == TextToSpeech.LANG_NOT_SUPPORTED) {
                         Log.e("error", "This Language is not supported");
                     } else {
-                        ConvertTextToSpeech();
+                        if (!savedInstanceStateHelper)
+                        {
+                            ConvertTextToSpeech();
+                        }
                     }
                 } else
                     Log.e("error", "Initialization of TextToSpeech Failed!");
@@ -141,14 +152,27 @@ public class VocabularyActivity extends AppCompatActivity {
             chosenPictures.add(i);
         }
         Collections.shuffle(chosenPictures);
-        giveQuestionFunc();
+
+        if (savedInstanceState != null)
+        {
+            imageId = savedInstanceState.getInt("imageId");
+            stringForPronouncing = savedInstanceState.getString("stringForPronouncing");
+            currentAnswerText = savedInstanceState.getString("currentAnswerText");
+            questionNumber = savedInstanceState.getInt("questionNumber");
+            seekBarProgress = savedInstanceState.getInt("seekBarProgress");
+
+            theImageView.setImageResource(imageId);
+            answer.setText(currentAnswerText);
+        } else {
+            giveQuestionFunc();
+        }
     }
 
     public void giveQuestionFunc() {
         String imageName = imagesList[chosenPictures.get(questionNumber)];
         String imageLocation = "drawable/" + imageName;
-        int id = getResources().getIdentifier(imageLocation, "id", "com.example.diplomska");
-        theImageView.setImageResource(id);
+        imageId = getResources().getIdentifier(imageLocation, "id", "com.example.diplomska");
+        theImageView.setImageResource(imageId);
         stringForPronouncing = imageName;
         ConvertTextToSpeech();
     }
@@ -259,5 +283,17 @@ public class VocabularyActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        currentAnswerText = answer.getText().toString();
+
+        outState.putInt("imageId", imageId);
+        outState.putString("stringForPronouncing", stringForPronouncing);
+        outState.putString("currentAnswerText", currentAnswerText);
+        outState.putInt("questionNumber", questionNumber);
+        outState.putInt("seekBarProgress", seekBarProgress);
+    }
 
 }
