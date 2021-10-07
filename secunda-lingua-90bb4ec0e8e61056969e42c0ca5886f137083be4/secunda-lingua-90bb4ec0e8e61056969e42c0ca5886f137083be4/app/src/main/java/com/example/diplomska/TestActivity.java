@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -82,12 +83,38 @@ public class TestActivity extends AppCompatActivity {
                 quitButton.setText("Back");
             }
         });
-        if (isReversed.equals("NO")) {
-            chooseQuestionsFunc();
+        if (savedInstanceState != null)
+        {
+            //TODO: restore UI
+            if (isReversed.equals("NO"))
+            {
+                altCorrectAnswers = savedInstanceState.getStringArrayList("altCorrectAnswers");
+            }
+            questions = savedInstanceState.getStringArrayList("questions");
+            correctAnswers = savedInstanceState.getStringArrayList("correctAnswers");
+            chosenQuestions = savedInstanceState.getIntArray("chosenQuestions");
+            aOne.setText(savedInstanceState.getString("answerForOne"));
+            aTwo.setText(savedInstanceState.getString("answerForTwo"));
+            aThree.setText(savedInstanceState.getString("answerForThree"));
+            aFour.setText(savedInstanceState.getString("answerForFour"));
+            aFive.setText(savedInstanceState.getString("answerForFive"));
+            qOne.setText(questions.get(chosenQuestions[0]));
+            qTwo.setText(questions.get(chosenQuestions[1]));
+            qThree.setText(questions.get(chosenQuestions[2]));
+            qFour.setText(questions.get(chosenQuestions[3]));
+            qFive.setText(questions.get(chosenQuestions[4]));
+            Log.e("questions", questions + "----");
+            Log.e("chose questions", chosenQuestions + "----");
+
+        } else {
+            if (isReversed.equals("NO")) {
+                chooseQuestionsFunc();
+            }
+            else {
+                chooseReversedQuestionsFunc();
+            }
         }
-        else {
-            chooseReversedQuestionsFunc();
-        }
+
     }
 
     public void readFromDb()
@@ -199,7 +226,6 @@ public class TestActivity extends AppCompatActivity {
         for(int y = 0 ; y < 5 ; y++)
         {
             chosenQuestions[y] = a.get(y);
-            Log.e("Number " , Integer.toString(chosenQuestions[y]));
         }
         qOne.setText(questions.get(chosenQuestions[0]));
         qTwo.setText(questions.get(chosenQuestions[1]));
@@ -229,6 +255,9 @@ public class TestActivity extends AppCompatActivity {
 
     private void checkReversedAnswers()
     {
+        Log.e("REVERSED", "`````````````````````````````````````````````````````");
+        Log.e("correa", correctAnswers + "");
+        Log.e("quest", questions + "");
         int points = 0;
 
         if ((aOne.getText().toString().toLowerCase().trim().equals(questions.get(chosenQuestions[0]).toLowerCase())))
@@ -247,7 +276,7 @@ public class TestActivity extends AppCompatActivity {
             aTwo.setTextColor(Color.parseColor("#19FA19"));
         }else {
             String pom = aTwo.getText().toString();
-            pom = pom + " (" + questions.get(chosenQuestions[0]) + ")";
+            pom = pom + " (" + questions.get(chosenQuestions[1]) + ")";
             aTwo.setText(pom);
             aTwo.setTextColor(Color.parseColor("#ff0000"));
         }
@@ -257,7 +286,7 @@ public class TestActivity extends AppCompatActivity {
             aThree.setTextColor(Color.parseColor("#19FA19"));
         }else {
             String pom = aThree.getText().toString();
-            pom = pom + "( " + questions.get(chosenQuestions[0]) + ")";
+            pom = pom + "( " + questions.get(chosenQuestions[2]) + ")";
             aThree.setText(pom);
             aThree.setTextColor(Color.parseColor("#ff0000"));
         }
@@ -267,7 +296,7 @@ public class TestActivity extends AppCompatActivity {
             aFour.setTextColor(Color.parseColor("#19FA19"));
         }else {
             String pom = aFour.getText().toString();
-            pom = pom + " (" + questions.get(chosenQuestions[0]) + ")";
+            pom = pom + " (" + questions.get(chosenQuestions[3]) + ")";
             aFour.setText(pom);
             aFour.setTextColor(Color.parseColor("#ff0000"));
         }
@@ -277,11 +306,28 @@ public class TestActivity extends AppCompatActivity {
             aFive.setTextColor(Color.parseColor("#19FA19"));
         }else {
             String pom = aFive.getText().toString();
-            pom = pom + " (" + questions.get(chosenQuestions[0]) + ")";
+            pom = pom + " (" + questions.get(chosenQuestions[4]) + ")";
             aFive.setText(pom);
             aFive.setTextColor(Color.parseColor("#ff0000"));
         }
         String pomString = "Score: " + Integer.toString(points) + "/5";
         score.setText(pomString);
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        Log.e("sending to state chosen questions", chosenQuestions + "-''''''''''''''''---");
+            outState.putIntArray("chosenQuestions", chosenQuestions);
+            outState.putStringArrayList("questions", questions);
+            outState.putStringArrayList("correctAnswers", correctAnswers);
+            outState.putStringArrayList("altCorrectAnswers", altCorrectAnswers);
+            outState.putString("answerForOne", aOne.getText().toString());
+            outState.putString("answerForTwo", aTwo.getText().toString());
+            outState.putString("answerForThree", aThree.getText().toString());
+            outState.putString("answerForFour", aFour.getText().toString());
+            outState.putString("answerForFive", aFive.getText().toString());
+
     }
 }
