@@ -28,6 +28,10 @@ public class TestOneActivity extends AppCompatActivity {
     String[] questions = {"Hello" , "Bye", "My name is", "Im thirsty", "Im hungry", "Im happy", "Im tired", "My", "Your", "Food"};
     String[] correctAnswers = {"zdravo" ,"Cao", "moeto ime e", "Zeden sum", "Gladen sum","Srekjen sum", "Umoren sum", "Moe", "Tvoe", "Hrana"};
     String[] altCorrectAnswers = {"zdravo" ,"Prijatno", "Jas se vikam", "Jas sum zeden", "Jas sum gladen","Jas sum srekjen", "Jas sum umoren", "Moe", "Tvoe", "Jadenje"};
+
+    String themeCorrectColour;
+    String themeInCorrectColour;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,7 +53,8 @@ public class TestOneActivity extends AppCompatActivity {
         quitButton = (Button) findViewById(R.id.testOneQuitButton);
         finishButton = (Button) findViewById(R.id.testOneFinishButton);
 
-       // chooseQuestionsFunc();
+        themeCorrectColour = getString(R.string.correctThematicColour);
+        themeInCorrectColour = getString(R.string.inCorrectThematicColour);
 
         quitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,75 +82,75 @@ public class TestOneActivity extends AppCompatActivity {
         || (answerOne.getText().toString().toLowerCase().equals(altCorrectAnswers[chosenQuestions[0]].toLowerCase())))
         {
             points = points + 1;
-            answerOne.setTextColor(Color.parseColor("#19FA19"));
+            answerOne.setTextColor(Color.parseColor(themeCorrectColour));
         }else {
-            answerOne.setTextColor(Color.parseColor("#ff0000"));
+            answerOne.setTextColor(Color.parseColor(themeInCorrectColour));
             if (answerFive.getText().toString().equals(""))
             {
                 String pom = answerOne.getText().toString();
                 pom = pom + " (" + questions[chosenQuestions[0]] + ")";
                 answerOne.setText(pom);
-                answerOne.setTextColor(Color.parseColor("#ff0000"));
+                answerOne.setTextColor(Color.parseColor(themeInCorrectColour));
             }
         }
         if ((answerTwo.getText().toString().toLowerCase().equals(correctAnswers[chosenQuestions[1]].toLowerCase()))
                 || (answerOne.getText().toString().toLowerCase().equals(altCorrectAnswers[chosenQuestions[1]].toLowerCase())))
         {
             points = points + 1;
-            answerTwo.setTextColor(Color.parseColor("#19FA19"));
+            answerTwo.setTextColor(Color.parseColor(themeCorrectColour));
         }else {
-            answerTwo.setTextColor(Color.parseColor("#ff0000"));
+            answerTwo.setTextColor(Color.parseColor(themeInCorrectColour));
             if (answerFive.getText().toString().equals(""))
             {
                 String pom = answerTwo.getText().toString();
                 pom = pom + " (" + questions[chosenQuestions[1]] + ")";
                 answerTwo.setText(pom);
-                answerTwo.setTextColor(Color.parseColor("#ff0000"));
+                answerTwo.setTextColor(Color.parseColor(themeInCorrectColour));
             }
         }
         if ((answerThree.getText().toString().toLowerCase().equals(correctAnswers[chosenQuestions[2]].toLowerCase()))
                 || (answerOne.getText().toString().toLowerCase().equals(altCorrectAnswers[chosenQuestions[2]].toLowerCase())))
         {
             points = points + 1;
-            answerThree.setTextColor(Color.parseColor("#19FA19"));
+            answerThree.setTextColor(Color.parseColor(themeCorrectColour));
         }else {
-            answerThree.setTextColor(Color.parseColor("#ff0000"));
+            answerThree.setTextColor(Color.parseColor(themeInCorrectColour));
             if (answerFive.getText().toString().equals(""))
             {
                 String pom = answerThree.getText().toString();
                 pom = pom + " (" + questions[chosenQuestions[2]] + ")";
                 answerThree.setText(pom);
-                answerThree.setTextColor(Color.parseColor("#ff0000"));
+                answerThree.setTextColor(Color.parseColor(themeInCorrectColour));
             }
         }
         if ((answerFour.getText().toString().toLowerCase().equals(correctAnswers[chosenQuestions[3]].toLowerCase()))
                 || (answerOne.getText().toString().toLowerCase().equals(altCorrectAnswers[chosenQuestions[3]].toLowerCase())))
         {
             points = points + 1;
-            answerFour.setTextColor(Color.parseColor("#19FA19"));
+            answerFour.setTextColor(Color.parseColor(themeCorrectColour));
         }else {
-            answerFour.setTextColor(Color.parseColor("#ff0000"));
+            answerFour.setTextColor(Color.parseColor(themeInCorrectColour));
             if (answerFive.getText().toString().equals(""))
             {
                 String pom = answerFour.getText().toString();
                 pom = pom + " (" + questions[chosenQuestions[3]] + ")";
                 answerFour.setText(pom);
-                answerFour.setTextColor(Color.parseColor("#ff0000"));
+                answerFour.setTextColor(Color.parseColor(themeInCorrectColour));
             }
         }
         if ((answerFive.getText().toString().toLowerCase().equals(correctAnswers[chosenQuestions[4]].toLowerCase()))
                 || (answerOne.getText().toString().toLowerCase().equals(altCorrectAnswers[chosenQuestions[4]].toLowerCase())))
         {
             points = points + 1;
-            answerFive.setTextColor(Color.parseColor("#19FA19"));
+            answerFive.setTextColor(Color.parseColor(themeCorrectColour));
         }else {
-            answerFive.setTextColor(Color.parseColor("#ff0000"));
+            answerFive.setTextColor(Color.parseColor(themeInCorrectColour));
             if (answerFive.getText().toString().equals(""))
             {
                 String pom = answerFive.getText().toString();
                 pom = pom + " (" + questions[chosenQuestions[4]] + ")";
                 answerFive.setText(pom);
-                answerFive.setTextColor(Color.parseColor("#ff0000"));
+                answerFive.setTextColor(Color.parseColor(themeInCorrectColour));
             }
         }
         if (points == 5) {

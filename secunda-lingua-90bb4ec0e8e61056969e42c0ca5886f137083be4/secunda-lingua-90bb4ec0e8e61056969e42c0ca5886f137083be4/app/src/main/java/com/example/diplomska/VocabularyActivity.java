@@ -148,7 +148,6 @@ public class VocabularyActivity extends AppCompatActivity {
             }
         });
 
-
         if (savedInstanceState != null)
         {
             restoreUIState(savedInstanceState);
@@ -195,7 +194,6 @@ public class VocabularyActivity extends AppCompatActivity {
         String answerGiven = answer.getText().toString();
         String answerRequired = imagesList[chosenPictures.get(questionNumber)];
 
-        Log.e("info: ", answerGiven + answerRequired + "question number" + questionNumber);
         if (answerGiven.toLowerCase().equals(answerRequired.toLowerCase())) {
             seekBarProgress = seekBarProgress + 20;
             seekBar.setProgress(seekBarProgress);
@@ -296,8 +294,6 @@ public class VocabularyActivity extends AppCompatActivity {
         super.onSaveInstanceState(outState);
 
         currentAnswerText = answer.getText().toString();
-
-        Log.e("GGGG", questionNumber + "-------");
 
         outState.putInt("imageId", imageId);
         outState.putString("stringForPronouncing", stringForPronouncing);

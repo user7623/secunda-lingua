@@ -116,7 +116,6 @@ public class MatchActivity extends AppCompatActivity {
                 null,
                 null);
         Random random = new Random();
-        Log.e("----", mCursor.getCount() + "------");
         if (mCursor.getCount() == 10)
         {
             mCursor.moveToFirst();
@@ -135,7 +134,6 @@ public class MatchActivity extends AppCompatActivity {
             translationsList.add(translation);
             mCursor.moveToNext();
             counter = counter - 1;
-            Log.e("question", sentence + translation);
         }
         mCursor.close();
     }
@@ -421,7 +419,6 @@ public class MatchActivity extends AppCompatActivity {
     }
     public void resetColoursLeft()
     {
-        Log.e("answered left", answeredLeft + "!");
         if (!answeredLeft.contains(1))
         {
             leftButtonOne.setBackgroundColor(Color.GREEN);
@@ -451,7 +448,6 @@ public class MatchActivity extends AppCompatActivity {
     }
     public void resetColoursRight()
     {
-        Log.e("answered left", answeredLeft + "!");
         if (!answeredRight.contains(1))
         {
             rightButtonOne.setBackgroundColor(Color.GREEN);
@@ -482,7 +478,6 @@ public class MatchActivity extends AppCompatActivity {
 
     public void addButtonsToAnswered(int left, int right)
     {
-        Log.e("Buttons", "have been added to answered-----------");
         answeredLeft.add(left);
         answeredRight.add(right);
         resetColoursLeft();
@@ -516,7 +511,6 @@ public class MatchActivity extends AppCompatActivity {
     }
     private void setSeekBarColor()
     {
-        Log.e("SEEKBAR", "setingh up colour" + seekBarProgress);
         seekBar.setProgress(seekBarProgress);
         if (seekBarProgress > 40 && seekBarProgress < 80)
         {

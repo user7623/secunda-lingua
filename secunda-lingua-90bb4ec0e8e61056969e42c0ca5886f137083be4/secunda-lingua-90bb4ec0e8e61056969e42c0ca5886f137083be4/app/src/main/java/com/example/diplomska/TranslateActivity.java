@@ -109,7 +109,6 @@ public class TranslateActivity extends AppCompatActivity {
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("info: " , "entered onClick");
                 checkAnswerFunction();
             }
         });
@@ -153,12 +152,9 @@ public class TranslateActivity extends AppCompatActivity {
     }
     public void checkAnswerFunction()
     {
-        Log.d("info: " , "entered checkAnswerFunction");
-
         String answerGiven = answerText.getText().toString().toLowerCase();
         String answerRequired = translationsList.get(questionNumber);
         String alAnswerRequired = altTranslationsList.get(questionNumber);
-        Log.e("info: " , answerGiven + answerRequired + alAnswerRequired);
         if (answerText.getText().toString().toLowerCase().equals(translationsList.get(questionNumber).toLowerCase())
         || answerText.getText().toString().toLowerCase().equals(altTranslationsList.get(questionNumber).toLowerCase()))
         {
@@ -258,7 +254,6 @@ public class TranslateActivity extends AppCompatActivity {
 
     public  void giveQuestionFunc()
     {
-        Log.d("info:" , "setting question, question number is" + questionNumber);
         questionText.setText(questionsList.get(questionNumber));
     }
 
@@ -272,7 +267,6 @@ public class TranslateActivity extends AppCompatActivity {
                 null,
                 null);
         Random random = new Random();
-        Log.e("----", mCursor.getCount() + "------");
         if (mCursor.getCount() == 10)
         {
             mCursor.moveToFirst();
@@ -292,8 +286,6 @@ public class TranslateActivity extends AppCompatActivity {
             translationsList.add(translation);
             altTranslationsList.add(altTranslation);
             mCursor.moveToNext();
-
-            Log.e("question", sentence + translation);
         }
         mCursor.close();
     }
