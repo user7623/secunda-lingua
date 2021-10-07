@@ -91,8 +91,8 @@ public class VocabularyActivity extends AppCompatActivity {
         questionMarkButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                hintString = imagesList[chosenPictures.get(questionNumber)];
-                Toast.makeText(VocabularyActivity.this, hintString, Toast.LENGTH_SHORT).show();
+                    hintString = imagesList[chosenPictures.get(questionNumber)];
+                    Toast.makeText(VocabularyActivity.this, hintString, Toast.LENGTH_SHORT).show();
             }
         });
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -147,25 +147,33 @@ public class VocabularyActivity extends AppCompatActivity {
                 ConvertTextToSpeech();
             }
         });
-        chosenPictures = new ArrayList<>(9);
-        for (int i = 0; i <= 8; i++){
-            chosenPictures.add(i);
-        }
-        Collections.shuffle(chosenPictures);
+
 
         if (savedInstanceState != null)
         {
-            imageId = savedInstanceState.getInt("imageId");
-            stringForPronouncing = savedInstanceState.getString("stringForPronouncing");
-            currentAnswerText = savedInstanceState.getString("currentAnswerText");
-            questionNumber = savedInstanceState.getInt("questionNumber");
-            seekBarProgress = savedInstanceState.getInt("seekBarProgress");
-
-            theImageView.setImageResource(imageId);
-            answer.setText(currentAnswerText);
+            restoreUIState(savedInstanceState);
         } else {
+            chosenPictures = new ArrayList<>(9);
+            for (int i = 0; i <= 8; i++){
+                chosenPictures.add(i);
+            }
+            Collections.shuffle(chosenPictures);
             giveQuestionFunc();
         }
+    }
+
+    public void restoreUIState (Bundle savedInstanceState) {
+        imageId = savedInstanceState.getInt("imageId");
+        stringForPronouncing = savedInstanceState.getString("stringForPronouncing");
+        currentAnswerText = savedInstanceState.getString("currentAnswerText");
+        questionNumber = savedInstanceState.getInt("questionNumber");
+        seekBarProgress = savedInstanceState.getInt("seekBarProgress");
+        hintString = savedInstanceState.getString("hintString");
+        chosenPictures = savedInstanceState.getIntegerArrayList("chosenPictures");
+
+        theImageView.setImageResource(imageId);
+        answer.setText(currentAnswerText);
+
     }
 
     public void giveQuestionFunc() {
@@ -187,7 +195,7 @@ public class VocabularyActivity extends AppCompatActivity {
         String answerGiven = answer.getText().toString();
         String answerRequired = imagesList[chosenPictures.get(questionNumber)];
 
-        Log.d("info: ", answerGiven + answerRequired);
+        Log.e("info: ", answerGiven + answerRequired + "question number" + questionNumber);
         if (answerGiven.toLowerCase().equals(answerRequired.toLowerCase())) {
             seekBarProgress = seekBarProgress + 20;
             seekBar.setProgress(seekBarProgress);
@@ -289,11 +297,15 @@ public class VocabularyActivity extends AppCompatActivity {
 
         currentAnswerText = answer.getText().toString();
 
+        Log.e("GGGG", questionNumber + "-------");
+
         outState.putInt("imageId", imageId);
         outState.putString("stringForPronouncing", stringForPronouncing);
         outState.putString("currentAnswerText", currentAnswerText);
         outState.putInt("questionNumber", questionNumber);
         outState.putInt("seekBarProgress", seekBarProgress);
+        outState.putString("hintString", hintString);
+        outState.putIntegerArrayList("chosenPictures", chosenPictures);
     }
 
 }
