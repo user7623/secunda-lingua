@@ -31,6 +31,8 @@ public class TestActivity extends AppCompatActivity {
     ArrayList<String> altCorrectAnswers = new ArrayList<>();
     TextView score;
     String isReversed;
+    String themeCorrectColour;
+    String themeInCorrectColour;
     private SQLiteDatabase mDatabase;
 
     @Override
@@ -60,6 +62,9 @@ public class TestActivity extends AppCompatActivity {
         finishButton = (Button) findViewById(R.id.testFinishButton);
 
         score = (TextView) findViewById(R.id.testScoreTextView);
+
+        themeCorrectColour = getString(R.string.correctThematicColour);
+        themeInCorrectColour = getString(R.string.inCorrectThematicColour);
 
         readFromDb();
 
@@ -161,56 +166,56 @@ public class TestActivity extends AppCompatActivity {
                 || (aOne.getText().toString().toLowerCase().trim().equals(altCorrectAnswers.get(chosenQuestions[0]).toLowerCase().trim())))
         {
             points = points + 1;
-            aOne.setTextColor(Color.parseColor("#19FA19"));
+            aOne.setTextColor(Color.parseColor(themeCorrectColour));
         }else {
             String pom = aOne.getText().toString();
             pom = pom + " (" + correctAnswers.get(chosenQuestions[0]) + "/" + altCorrectAnswers.get(chosenQuestions[0]) + ")";
             aOne.setText(pom);
-            aOne.setTextColor(Color.parseColor("#ff0000"));
+            aOne.setTextColor(Color.parseColor(themeInCorrectColour));
         }
         if ((aTwo.getText().toString().toLowerCase().trim().equals(correctAnswers.get(chosenQuestions[1]).toLowerCase().trim()))
                 || (aTwo.getText().toString().toLowerCase().trim().equals(altCorrectAnswers.get(chosenQuestions[1]).toLowerCase().trim())))
         {
             points = points + 1;
-            aTwo.setTextColor(Color.parseColor("#19FA19"));
+            aTwo.setTextColor(Color.parseColor(themeCorrectColour));
         }else {
             String pom = aTwo.getText().toString();
             pom = pom + " (" +correctAnswers.get(chosenQuestions[1]) +  "/" + altCorrectAnswers.get(chosenQuestions[1]) +")";
             aTwo.setText(pom);
-            aTwo.setTextColor(Color.parseColor("#ff0000"));
+            aTwo.setTextColor(Color.parseColor(themeInCorrectColour));
         }
         if ((aThree.getText().toString().toLowerCase().trim().equals(correctAnswers.get(chosenQuestions[2]).toLowerCase().trim()))
                 || (aThree.getText().toString().toLowerCase().trim().equals(altCorrectAnswers.get(chosenQuestions[2]).toLowerCase().trim())))
         {
             points = points + 1;
-            aThree.setTextColor(Color.parseColor("#19FA19"));
+            aThree.setTextColor(Color.parseColor(themeCorrectColour));
         }else {
             String pom = aThree.getText().toString();
             pom = pom + "( " +correctAnswers.get(chosenQuestions[2]) +  "/" + altCorrectAnswers.get(chosenQuestions[2]) +")";
             aThree.setText(pom);
-            aThree.setTextColor(Color.parseColor("#ff0000"));
+            aThree.setTextColor(Color.parseColor(themeInCorrectColour));
         }
         if ((aFour.getText().toString().toLowerCase().trim().equals(correctAnswers.get(chosenQuestions[3]).toLowerCase().trim()))
                 || (aFour.getText().toString().toLowerCase().trim().equals(altCorrectAnswers.get(chosenQuestions[3]).toLowerCase().trim())))
         {
             points = points + 1;
-            aFour.setTextColor(Color.parseColor("#19FA19"));
+            aFour.setTextColor(Color.parseColor(themeCorrectColour));
         }else {
             String pom = aFour.getText().toString();
             pom = pom + " (" +correctAnswers.get(chosenQuestions[3]) +  "/" + altCorrectAnswers.get(chosenQuestions[3]) +")";
             aFour.setText(pom);
-            aFour.setTextColor(Color.parseColor("#ff0000"));
+            aFour.setTextColor(Color.parseColor(themeInCorrectColour));
         }
         if ((aFive.getText().toString().toLowerCase().trim().equals(correctAnswers.get(chosenQuestions[4]).toLowerCase().trim()))
                 || (aFive.getText().toString().toLowerCase().trim().equals(altCorrectAnswers.get(chosenQuestions[4]).toLowerCase().trim())))
         {
             points = points + 1;
-            aFive.setTextColor(Color.parseColor("#19FA19"));
+            aFive.setTextColor(Color.parseColor(themeCorrectColour));
         }else {
             String pom = aFive.getText().toString();
             pom = pom + " (" +correctAnswers.get(chosenQuestions[4]) +  "/" + altCorrectAnswers.get(chosenQuestions[4]) +")";
             aFive.setText(pom);
-            aFive.setTextColor(Color.parseColor("#ff0000"));
+            aFive.setTextColor(Color.parseColor(themeInCorrectColour));
         }
         String pomString = "Score: " + Integer.toString(points) + "/5";
         score.setText(pomString);
@@ -263,52 +268,52 @@ public class TestActivity extends AppCompatActivity {
         if ((aOne.getText().toString().toLowerCase().trim().equals(questions.get(chosenQuestions[0]).toLowerCase())))
         {
             points = points + 1;
-            aOne.setTextColor(Color.parseColor("#19FA19"));
+            aOne.setTextColor(Color.parseColor(themeCorrectColour));
         }else {
             String pom = aOne.getText().toString();
             pom = pom + " (" + questions.get(chosenQuestions[0]) + ")";
             aOne.setText(pom);
-            aOne.setTextColor(Color.parseColor("#ff0000"));
+            aOne.setTextColor(Color.parseColor(themeInCorrectColour));
         }
-        if ((aTwo.getText().toString().toLowerCase().trim().equals(questions.get(chosenQuestions[0]).toLowerCase())))
+        if ((aTwo.getText().toString().toLowerCase().trim().equals(questions.get(chosenQuestions[1]).toLowerCase())))
         {
             points = points + 1;
-            aTwo.setTextColor(Color.parseColor("#19FA19"));
+            aTwo.setTextColor(Color.parseColor(themeCorrectColour));
         }else {
             String pom = aTwo.getText().toString();
             pom = pom + " (" + questions.get(chosenQuestions[1]) + ")";
             aTwo.setText(pom);
-            aTwo.setTextColor(Color.parseColor("#ff0000"));
+            aTwo.setTextColor(Color.parseColor(themeInCorrectColour));
         }
-        if ((aThree.getText().toString().toLowerCase().trim().equals(correctAnswers.get(chosenQuestions[0]).toLowerCase())))
+        if ((aThree.getText().toString().toLowerCase().trim().equals(questions.get(chosenQuestions[2]).toLowerCase())))
         {
             points = points + 1;
-            aThree.setTextColor(Color.parseColor("#19FA19"));
+            aThree.setTextColor(Color.parseColor(themeCorrectColour));
         }else {
             String pom = aThree.getText().toString();
             pom = pom + "( " + questions.get(chosenQuestions[2]) + ")";
             aThree.setText(pom);
-            aThree.setTextColor(Color.parseColor("#ff0000"));
+            aThree.setTextColor(Color.parseColor(themeInCorrectColour));
         }
-        if ((aFour.getText().toString().toLowerCase().trim().equals(questions.get(chosenQuestions[0]).toLowerCase())))
+        if ((aFour.getText().toString().toLowerCase().trim().equals(questions.get(chosenQuestions[3]).toLowerCase())))
         {
             points = points + 1;
-            aFour.setTextColor(Color.parseColor("#19FA19"));
+            aFour.setTextColor(Color.parseColor(themeCorrectColour));
         }else {
             String pom = aFour.getText().toString();
             pom = pom + " (" + questions.get(chosenQuestions[3]) + ")";
             aFour.setText(pom);
-            aFour.setTextColor(Color.parseColor("#ff0000"));
+            aFour.setTextColor(Color.parseColor(themeInCorrectColour));
         }
-        if ((aFive.getText().toString().toLowerCase().trim().equals(questions.get(chosenQuestions[0]).toLowerCase())))
+        if ((aFive.getText().toString().toLowerCase().trim().equals(questions.get(chosenQuestions[4]).toLowerCase())))
         {
             points = points + 1;
-            aFive.setTextColor(Color.parseColor("#19FA19"));
+            aFive.setTextColor(Color.parseColor(themeCorrectColour));
         }else {
             String pom = aFive.getText().toString();
             pom = pom + " (" + questions.get(chosenQuestions[4]) + ")";
             aFive.setText(pom);
-            aFive.setTextColor(Color.parseColor("#ff0000"));
+            aFive.setTextColor(Color.parseColor(themeInCorrectColour));
         }
         String pomString = "Score: " + Integer.toString(points) + "/5";
         score.setText(pomString);
@@ -318,7 +323,6 @@ public class TestActivity extends AppCompatActivity {
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        Log.e("sending to state chosen questions", chosenQuestions + "-''''''''''''''''---");
             outState.putIntArray("chosenQuestions", chosenQuestions);
             outState.putStringArrayList("questions", questions);
             outState.putStringArrayList("correctAnswers", correctAnswers);
@@ -328,6 +332,5 @@ public class TestActivity extends AppCompatActivity {
             outState.putString("answerForThree", aThree.getText().toString());
             outState.putString("answerForFour", aFour.getText().toString());
             outState.putString("answerForFive", aFive.getText().toString());
-
     }
 }
