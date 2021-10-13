@@ -55,7 +55,7 @@
         android:layout_marginTop="50dp"
         android:gravity="center"
         android:text="default text"
-        android:textColor="@color/purple_200"
+        android:textColor="@color/main_theme_color"
         android:textSize="25dp"
 
         />
@@ -64,11 +64,10 @@
         android:id="@+id/questionMarkButtonTranslate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="#5119FA19"
         android:text=" ? "
-        android:textColor="@android:color/black"
         android:textSize="30dp"
-        app:cornerRadius="55dp"
+        android:backgroundTint="@android:color/white"
+        android:textColor="@color/main_theme_color"
          />
 
     <EditText
@@ -76,7 +75,7 @@
         android:layout_height="100dp"
         android:id="@+id/translateEditText"
         android:textSize="30dp"
-        android:textColor="#19FA19"
+        android:textColor="@color/main_theme_color"
         android:paddingBottom="50sp"
         />
 
@@ -92,7 +91,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
-        android:backgroundTint="@color/purple_200"
+        android:backgroundTint="@color/main_theme_color"
         android:text="Submit"
         app:cornerRadius="20dp"
         app:layout_constraintLeft_toLeftOf="parent"

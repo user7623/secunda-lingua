@@ -39,9 +39,14 @@ public class MainActivity extends AppCompatActivity {
     static String[] sentences;
     static String[] translations;
     static String[] altTranslations;
-    private static Timer timer;
-    private static TimerTask timerTask;
-    private int counter = 0;
+
+    Button vocabularyButton;
+    Button translateButton;
+    Button understandButton;
+    Button matchButton;
+    Button testOneButton;
+    Button testTwoButton;
+    Button testThreeButton;
 
     TextView scoreTextView;
 
@@ -59,23 +64,85 @@ public class MainActivity extends AppCompatActivity {
         TranslateDBHelper dbHelper = new TranslateDBHelper(this);
         mDatabase = dbHelper.getWritableDatabase();
 
-        Button vocabularyButton = (Button) findViewById(R.id.basicVocabularyButton);
-        Button translateButton = (Button) findViewById(R.id.translateButton);
-        Button understandButton = (Button) findViewById(R.id.understandButton);
-        Button matchButton = (Button) findViewById(R.id.matchButton);
-        Button testOneButton = (Button) findViewById(R.id.testOneButton);
-        Button testTwoButton = (Button) findViewById(R.id.testTwoButton);
-        Button testThreeButton = (Button) findViewById(R.id.testThreeButton);
+        vocabularyButton = (Button) findViewById(R.id.basicVocabularyButton);
+        translateButton = (Button) findViewById(R.id.translateButton);
+        understandButton = (Button) findViewById(R.id.understandButton);
+        matchButton = (Button) findViewById(R.id.matchButton);
+        testOneButton = (Button) findViewById(R.id.testOneButton);
+        testTwoButton = (Button) findViewById(R.id.testTwoButton);
+        testThreeButton = (Button) findViewById(R.id.testThreeButton);
+
         scoreTextView = (TextView) findViewById(R.id.scoreTextView);
 
         SharedPreferences preferences = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
         SharedPreferences.Editor editor = preferences.edit();
 
+        setScoreNumberForUI();
+        setOnClickListenersForButtons();
+        setUpDB();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.my_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.settings_to_open:
+                Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
+                startActivity(settingsIntent);
+               return true;
+            case R.id.achievements_to_open:
+                Intent achievementsIntent = new Intent(MainActivity.this, AchievementsActivity.class);
+                startActivity(achievementsIntent);
+                return true;
+            case R.id.download_more_exercises:
+                Intent downloadIntent = new Intent(MainActivity.this, DownloadMoreAction.class);
+                startActivity(downloadIntent);
+               return true;
+            
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @SuppressLint("Recycle")
+    public static void addItem() {
+        sentences = getSentencesArrayGlobal();
+        translations = getTranslationsArrayGlobal();
+        altTranslations = getAlternativeTranslationsarrayGlobal();
+        ContentValues cv = new ContentValues();
+        int count = sentences.length;
+        for (int i = 0 ; i < count ; i++)
+        {
+            cv.put(translateExercise.TranslateEntry.COLUMN_SENTENCE, sentences[i]);
+            cv.put(translateExercise.TranslateEntry.COLUMN_TRANSLATION, translations[i]);
+            cv.put(translateExercise.TranslateEntry.COLUMN_ALT_TRANSLATION, altTranslations[i]);
+            Log.d("info: " , "now putting number" + String.valueOf(i));
+            mDatabase.insert(translateExercise.TranslateEntry.TABLE_NAME, null, cv);
+        }
+        mDatabase.execSQL("DELETE FROM groceryList WHERE _id NOT IN (SELECT MIN(_id) FROM groceryList GROUP BY name);");
+    }
+
+    private static boolean doesDatabaseExist(Context context, String dbName) {
+
+        File dbFile = context.getDatabasePath(dbName);
+        return dbFile.exists();
+    }
+
+    private void setScoreNumberForUI()
+    {
         int Score = PreferenceManager.getDefaultSharedPreferences(this).getInt("Score", 0);
         String scoreString = scoreTextView.getText().toString();
         scoreString = scoreString + Integer.toString(Score);
         scoreTextView.setText(scoreString);
-
+    }
+    private void setOnClickListenersForButtons()
+    {
         vocabularyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,6 +196,9 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(testThreeIntent);
             }
         });
+    }
+    private void setUpDB()
+    {
         if (!doesDatabaseExist(this, "mDatabase"))
         {
             Log.e("Database " , "Exists");
@@ -151,57 +221,5 @@ public class MainActivity extends AppCompatActivity {
         {
             Log.e("ERROR", "No database!");
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.my_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.settings_to_open:
-                Intent settingsIntent = new Intent(MainActivity.this, SettingsActivity.class);
-                startActivity(settingsIntent);
-               return true;
-            case R.id.achievements_to_open:
-                Intent achievementsIntent = new Intent(MainActivity.this, AchievementsActivity.class);
-                startActivity(achievementsIntent);
-                return true;
-            case R.id.download_more_exercises:
-                Intent downloadIntent = new Intent(MainActivity.this, DownloadMoreAction.class);
-                startActivity(downloadIntent);
-               return true;
-            
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @SuppressLint("Recycle")
-    public static void addItem() {
-        sentences = getSentencesArrayGlobal();
-        translations = getTranslationsArrayGlobal();
-        altTranslations = getAlternativeTranslationsarrayGlobal();
-        ContentValues cv = new ContentValues();
-        int count = sentences.length;
-        for (int i = 0 ; i < count ; i++)
-        {
-            cv.put(translateExercise.TranslateEntry.COLUMN_SENTENCE, sentences[i]);
-            cv.put(translateExercise.TranslateEntry.COLUMN_TRANSLATION, translations[i]);
-            cv.put(translateExercise.TranslateEntry.COLUMN_ALT_TRANSLATION, altTranslations[i]);
-            Log.d("info: " , "now putting number" + String.valueOf(i));
-            mDatabase.insert(translateExercise.TranslateEntry.TABLE_NAME, null, cv);
-        }
-        mDatabase.execSQL("DELETE FROM groceryList WHERE _id NOT IN (SELECT MIN(_id) FROM groceryList GROUP BY name);");
-    }
-
-    private static boolean doesDatabaseExist(Context context, String dbName) {
-
-        File dbFile = context.getDatabasePath(dbName);
-        return dbFile.exists();
     }
 }

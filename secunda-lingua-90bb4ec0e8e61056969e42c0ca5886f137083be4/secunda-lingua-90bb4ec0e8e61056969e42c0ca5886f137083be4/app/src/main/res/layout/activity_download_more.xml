@@ -26,7 +26,7 @@
         android:gravity="center"
         android:padding="15sp"
         android:text="Download more exercises by clicking the button below to increase your vocabulary and language speaking capabilities"
-        android:textColor="@color/purple_200"
+        android:textColor="@color/main_theme_color"
         android:textSize="18sp"
         android:textStyle="italic"
         app:layout_constraintLeft_toLeftOf="parent"

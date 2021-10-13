@@ -10,7 +10,7 @@ android:shape="rectangle"
             android:topLeftRadius="12dp"
             android:topRightRadius="12dp"/>
         <stroke
-            android:color="@color/purple_700"
+            android:color="@color/main_theme_color"
             android:width="4sp"/>
 
 </shape>

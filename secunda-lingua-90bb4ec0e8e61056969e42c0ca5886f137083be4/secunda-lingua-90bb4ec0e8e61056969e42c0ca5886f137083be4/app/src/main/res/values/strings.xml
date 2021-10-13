@@ -22,11 +22,12 @@
 
     <string name="back4app_server_url">https://parseapi.back4app.com/</string>
 
-    <!-- Paste BOTH strings as required -->
     <string name="back4app_app_id">KZiwOZWqmpX7GHfHcQaR3eRirQvJe1Ax8PlP6qjl</string>
     <string name="back4app_client_key">16Scx8aTvqMPuNNRzUI9dDo1Pv3fDBQh1BYjJJBD</string>
 
     <string name="correctThematicColour">#19FA19</string>
     <string name="inCorrectThematicColour">#ff0000</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 
 </resources>

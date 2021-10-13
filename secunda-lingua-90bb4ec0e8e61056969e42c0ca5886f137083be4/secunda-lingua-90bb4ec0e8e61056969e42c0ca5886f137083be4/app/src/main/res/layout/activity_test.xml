@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:text="Translate the sentences"
                 android:textSize="32sp"
-                android:textColor="@color/purple_700"
+                android:textColor="@color/main_theme_color"
                 android:gravity="center"
                 android:paddingBottom="20sp"
                 android:paddingTop="20sp"
@@ -35,16 +35,17 @@
                 android:layout_height="wrap_content"
                 android:text="questionOne"
                 android:textSize="30sp"
-                android:textColor="#000"
                 android:gravity="center"
                 android:id="@+id/testQuestionOne"
                 />
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#000"
+                android:textColor="@color/main_theme_color"
                 android:textSize="30sp"
                 android:gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:id="@+id/testAnswerOne"
                 android:background="@drawable/edit_text_border_test"
                 />
@@ -53,34 +54,36 @@
                 android:layout_height="wrap_content"
                 android:text="questionTwo"
                 android:textSize="30sp"
-                android:textColor="#000"
                 android:gravity="center"
                 android:id="@+id/testQuestionTwo"
                 />
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#000"
+                android:textColor="@color/main_theme_color"
                 android:background="@drawable/edit_text_border_test"
                 android:textSize="30sp"
                 android:gravity="center"
                 android:id="@+id/testAnswerTwo"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="questionThree"
                 android:textSize="30sp"
-                android:textColor="#000"
                 android:gravity="center"
                 android:id="@+id/testQuestionThree"
                 />
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#000"
+                android:textColor="@color/main_theme_color"
                 android:textSize="30sp"
                 android:gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:id="@+id/testAnswerThree"
                 android:background="@drawable/edit_text_border_test"
                 />
@@ -89,16 +92,17 @@
                 android:layout_height="wrap_content"
                 android:text="questionFour"
                 android:textSize="30sp"
-                android:textColor="#000"
                 android:gravity="center"
                 android:id="@+id/testQuestionFour"
                 />
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#000"
+                android:textColor="@color/main_theme_color"
                 android:gravity="center"
                 android:textSize="30sp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:id="@+id/testAnswerFour"
                 android:background="@drawable/edit_text_border_test"
                 />
@@ -107,16 +111,17 @@
                 android:layout_height="wrap_content"
                 android:text="questionFive"
                 android:textSize="30sp"
-                android:textColor="#000"
                 android:gravity="center"
                 android:id="@+id/testQuestionFive"
                 />
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#000"
+                android:textColor="@color/main_theme_color"
                 android:textSize="30sp"
                 android:gravity="center"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:id="@+id/testAnswerFive"
                 android:background="@drawable/edit_text_border_test"
                 />
@@ -124,7 +129,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Score: "
-                android:textColor="#000"
                 android:textSize="30sp"
                 android:padding="30sp"
                 android:paddingBottom="80sp"
@@ -151,7 +155,6 @@
             android:text="quit"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:textColor="@color/white"
             />
 
         <Button
@@ -162,7 +165,6 @@
             android:text="finish"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:textColor="@color/white"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

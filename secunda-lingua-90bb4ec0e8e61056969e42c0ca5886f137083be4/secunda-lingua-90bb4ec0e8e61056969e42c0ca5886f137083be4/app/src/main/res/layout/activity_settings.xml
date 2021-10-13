@@ -99,7 +99,7 @@
         android:layout_marginTop="10dp"
         android:text="+"
         android:textSize="30dp"
-        android:backgroundTint="@color/purple_200"
+        android:backgroundTint="@color/main_theme_color"
         app:layout_constraintLeft_toRightOf="@id/hourTextView"
         app:layout_constraintTop_toBottomOf="@id/remindMeAtTextView" />
 
@@ -110,7 +110,7 @@
         android:layout_marginTop="10dp"
         android:text="-"
         android:textSize="30dp"
-        android:backgroundTint="@color/purple_200"
+        android:backgroundTint="@color/main_theme_color"
         app:layout_constraintRight_toLeftOf="@id/hourTextView"
         app:layout_constraintTop_toBottomOf="@id/remindMeAtTextView" />
     <Button
@@ -121,7 +121,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         android:paddingVertical="25dp"
         android:paddingHorizontal="25dp"
-        android:backgroundTint="@color/purple_200"
+        android:backgroundTint="@color/main_theme_color"
         android:text="BACK"
         android:textSize="20dp"
         />
