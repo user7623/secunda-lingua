@@ -56,13 +56,14 @@ public class AlarmService extends Service {
     private void enableReminder()
     {
         SharedPreferences preferences = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
-        int timeOfDay = PreferenceManager.getDefaultSharedPreferences(AlarmService.this).getInt("timeOfDay", 12);
+        int timeOfDayHour = PreferenceManager.getDefaultSharedPreferences(AlarmService.this).getInt("timeOfDayHour", 12);
+        int timeOfDayMinute = PreferenceManager.getDefaultSharedPreferences(AlarmService.this).getInt("timeOfDayMinute", 0);
+
         try {
-            Log.e("here", timeOfDay + ".....");
-            if (timeOfDay != 0) {
+            if (timeOfDayHour != 0) {
                 Calendar c = Calendar.getInstance();
-                c.set(Calendar.HOUR_OF_DAY, timeOfDay);
-                c.set(Calendar.MINUTE, 0);
+                c.set(Calendar.HOUR_OF_DAY, timeOfDayHour);
+                c.set(Calendar.MINUTE, timeOfDayMinute);
                 c.set(Calendar.SECOND, 0);
                 Log.e("starting alarm", "starting alarm");
                 startAlarm(c);

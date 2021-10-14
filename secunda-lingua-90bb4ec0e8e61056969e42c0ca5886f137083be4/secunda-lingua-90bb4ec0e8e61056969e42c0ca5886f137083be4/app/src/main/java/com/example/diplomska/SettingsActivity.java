@@ -1,22 +1,23 @@
 package com.example.diplomska;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.preference.PreferenceManager;
-
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.preference.PreferenceManager;
+
 import java.util.Calendar;
+import java.util.Locale;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -24,19 +25,33 @@ public class SettingsActivity extends AppCompatActivity {
     boolean notificationsAreActivated = false;
     public static boolean wantsMotivationalMsg = false;
 
+    Button backButton;
+    Button openTimePickerButton;
+    Switch notificationsSwitch;
+    Switch motivationSwitch;
+    int hour,minute;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-        Button backButton = (Button) findViewById(R.id.settings_menu_back_button);
-        Button plusButton = (Button) findViewById(R.id.plusHourButton);
-        Button minusButton = (Button) findViewById(R.id.minusHourButton);
+        backButton = (Button) findViewById(R.id.settings_menu_back_button);
+        notificationsSwitch = (Switch) findViewById(R.id.notification_switch);
+        motivationSwitch = (Switch) findViewById(R.id.motivations_switch);
+        openTimePickerButton = (Button) findViewById(R.id.openTimePickerButton);
 
-        TextView hourTextView = (TextView) findViewById(R.id.hourTextView);
+        setOnClickListeners();
 
-        Switch notificationsSwitch = (Switch) findViewById(R.id.notification_switch);
-        Switch motivationSwitch = (Switch) findViewById(R.id.motivations_switch);
+    }
 
+    private void activateNotificationsFunction()
+    {
+        Intent alarmServiceIntent = new Intent(SettingsActivity.this , AlarmService.class);
+        startService(alarmServiceIntent);
+    }
+
+    private void setOnClickListeners()
+    {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,7 +60,8 @@ public class SettingsActivity extends AppCompatActivity {
                     SharedPreferences preferences = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
 
-                    PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putInt("timeOfDay", hourTextViewValue).apply();
+                    PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putInt("timeOfDayHour", hour).apply();
+                    PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putInt("timeOfDayMinute", minute).apply();
 
                     activateNotificationsFunction();
                 }else if (!notificationsSwitch.isChecked())
@@ -75,20 +91,6 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        plusButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hourTextViewValue = hourTextViewValue + 1;
-                hourTextView.setText(String.valueOf(hourTextViewValue));
-            }
-        });
-        minusButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                hourTextViewValue = hourTextViewValue - 1;
-                hourTextView.setText(String.valueOf(hourTextViewValue));
-            }
-        });
         notificationsSwitch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -100,7 +102,9 @@ public class SettingsActivity extends AppCompatActivity {
                     SharedPreferences preferences = getApplicationContext().getSharedPreferences("MyPref", MODE_PRIVATE);
                     SharedPreferences.Editor editor = preferences.edit();
 
-                    PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putInt("timeOfDay", hourTextViewValue).apply();
+                    PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putInt("timeOfDayHour", hour).apply();
+                    PreferenceManager.getDefaultSharedPreferences(SettingsActivity.this).edit().putInt("timeOfDayMinute", minute).apply();
+
 
                     activateNotificationsFunction();
                 }else {
@@ -108,8 +112,8 @@ public class SettingsActivity extends AppCompatActivity {
                     Toast.makeText(SettingsActivity.this, "Notifications are turned on", Toast.LENGTH_SHORT).show();
                     Calendar calendar = Calendar.getInstance();
 
-                    calendar.set(Calendar.HOUR_OF_DAY, hourTextViewValue);
-                    calendar.set(Calendar.MINUTE, 21);
+                    calendar.set(Calendar.HOUR_OF_DAY, hour);
+                    calendar.set(Calendar.MINUTE, minute);
 
                     Intent notificationIntent = new Intent(SettingsActivity.this, BroadcastReceiver.class);
 
@@ -134,11 +138,25 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 
-    private void activateNotificationsFunction()
-    {
-        Intent alarmServiceIntent = new Intent(SettingsActivity.this , AlarmService.class);
-        startService(alarmServiceIntent);
+
+    public void popTimePicker(View view) {
+        TimePickerDialog.OnTimeSetListener onTimeSetListener = new TimePickerDialog.OnTimeSetListener()
+        {
+            @Override
+            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute)
+            {
+                hour = selectedHour;
+                minute = selectedMinute;
+                openTimePickerButton.setText(String.format(Locale.getDefault(), "%02d:%02d",hour, minute));
+            }
+        };
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, onTimeSetListener, hour, minute, true);
+
+        timePickerDialog.setTitle("Select Time");
+        timePickerDialog.show();
     }
 }

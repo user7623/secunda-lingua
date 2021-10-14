@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -106,6 +107,11 @@ public class DownloadMoreAction extends AppCompatActivity {
         setSentencesArrayGlobal(newSentencesArray);
 
         updateDatabase();
+
+        Toast.makeText(DownloadMoreAction.this, "New exercises downloaded", Toast.LENGTH_LONG).show();
+        Intent backFromDownloadIntent = new Intent(DownloadMoreAction.this, MainActivity.class);
+        startActivity(backFromDownloadIntent);
+
     }
 
     private void updateDatabase() {

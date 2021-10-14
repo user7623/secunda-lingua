@@ -10,23 +10,12 @@ public class Achievements {
         return Achievement;
     }
 
-    public static void setAchievement(String[] achievement) {
-        Achievement = achievement;
-    }
-
     public static String[] getAchievementDesc() {
         return AchievementDesc;
-    }
-
-    public static void setAchievementDesc(String[] achievementDesc) {
-        AchievementDesc = achievementDesc;
     }
 
     public static int[] getAchievementImage() {
         return AchievementImage;
     }
 
-    public static void setAchievementImage(int[] achievementImage) {
-        AchievementImage = achievementImage;
-    }
 }
